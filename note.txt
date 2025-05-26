@@ -1,3 +1,5 @@
+model -> controller -> route -> view
+
 admin/
     layouts/
         - head.blade.php
@@ -19,3 +21,13 @@ admin/
     partials/
         - paginator.blade.php
 frontend/
+
+
+
+sliders
+    - id
+    - title
+    - url
+    - status (1/2)
+    - created_at
+    - updated_at

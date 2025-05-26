@@ -8,12 +8,34 @@ use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
+    public $params = [];
+    public $viewAction = '';
+    private $model;
+
+    public function __construct(Request $request)
+    {
+        $this->model = new Slider();
+        $routeAs = $request->route()->getAction()['as'];
+        $routeArr = explode('.', $routeAs);
+        $module = $routeArr[0];
+        $controller = $routeArr[1];
+        $action = $routeArr[2];
+        $this->params = $request->all();
+        $this->viewAction =  $module . '.pages.' . $controller . '.' . $action;
+        $this->params['pagination']['totalItemsPerPage'] = 5;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        dd(123);
+        $items = $this->model->listItems($this->params, ['task' => 'admin-list-items']);
+        $this->params['items'] = $items;
+
+        return view($this->viewAction, [
+            'params' => $this->params,
+        ]);
     }
 
     /**
@@ -21,7 +43,9 @@ class SliderController extends Controller
      */
     public function create()
     {
-        //
+        return view($this->viewAction, [
+            'params' => $this->params,
+        ]);
     }
 
     /**
