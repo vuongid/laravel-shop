@@ -1,0 +1,21 @@
+admin/
+    layouts/
+        - head.blade.php
+        - script.blade.php
+        - header.blade.php
+        - footer.blade.php
+        - sidebar.blade.php
+        - main.blade.php
+    pages/
+        - slider
+            - index
+            - create
+            - edit
+            - show
+        - articleCategory/
+        - article/
+        - productCategory/
+        - product/
+    partials/
+        - paginator.blade.php
+frontend/
