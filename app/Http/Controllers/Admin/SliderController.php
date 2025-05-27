@@ -71,15 +71,20 @@ class SliderController extends Controller
      */
     public function edit(Slider $slider)
     {
-        //
+        $this->params['item'] = $slider;
+
+        return view($this->viewAction, [
+            'params' => $this->params,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Slider $slider)
+    public function update(SliderRequest $request, Slider $slider)
     {
-        //
+        $this->model->saveItem(['item' => $slider] + $request->all(), ['task' => 'edit-item']);
+        return redirect()->route('admin.slider.index')->with('notify', 'Cập nhật dữ liệu thành công!');
     }
 
     /**

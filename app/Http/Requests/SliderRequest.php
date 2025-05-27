@@ -37,8 +37,8 @@ class SliderRequest extends FormRequest
         return [
             'title.required' => 'Tên không được rỗng',
             'title.between'  => 'Tên có độ dài từ :min đến :max ký tự',
-            'utl.required'   => 'URL không được rỗng',
-            'utl.url'        => 'URL không hợp lệ',
+            'url.required'   => 'URL không được rỗng',
+            'url.url'        => 'URL không hợp lệ',
         ];
     }
 

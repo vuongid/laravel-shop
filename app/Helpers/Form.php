@@ -16,16 +16,17 @@ class Form
         return $xhtml;
     }
 
-    public static function input($type, $InputName, $labelName)
+    public static function input($type, $inputName, $labelName, $inputValue = null)
     {
         $xhtml = sprintf(
             '<div class="mb-3">
                 <label class="form-label">%s</label>
-                <input type="%s" class="form-control" name="%s" </div>
+                <input type="%s" class="form-control" name="%s" value="%s"</div>
             </div>',
             $labelName,
             $type,
-            $InputName,
+            $inputName,
+            $inputValue,
         );
         return $xhtml;
     }
@@ -34,7 +35,8 @@ class Form
     {
         $xhtmlOption = null;
         foreach ($values as $value => $name) {
-            $xhtmlOption .= sprintf('<option value="%s">%s</option>', $value, $name);
+            $selected = ($currentValue == $value) ? 'selected' : '';
+            $xhtmlOption .= sprintf('<option value="%s" %s>%s</option>', $value, $selected, $name);
         }
 
         $xhtml = sprintf(

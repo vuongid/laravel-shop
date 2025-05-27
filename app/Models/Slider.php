@@ -27,6 +27,11 @@ class Slider extends Model
         if ($options['task'] == 'create-item') {
             self::create($params);
         }
+
+        if ($options['task'] == 'edit-item') {
+            $item = self::find($params['item']->id);
+            $item->update($params);
+        }
     }
 
     public function deleteItem($params = null, $options = null)

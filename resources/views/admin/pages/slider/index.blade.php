@@ -46,7 +46,7 @@
                                             config('shop.format.short_time'),
                                             strtotime($item['created_at']),
                                         );
-                                        $udpatedAt = date(
+                                        $updateAt = date(
                                             config('shop.format.short_time'),
                                             strtotime($item['updated_at']),
                                         );
@@ -55,9 +55,9 @@
                                         <td class="text-secondary">{{ $item['title'] }}</td>
                                         <td class="text-secondary">{!! $status !!}</td>
                                         <td class="text-secondary">{{ $createdAt }}</td>
-                                        <td class="text-secondary">{{ $udpatedAt }}</td>
+                                        <td class="text-secondary">{{ $updateAt }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-info">Edit</a>
+                                            <a href="{{ route('admin.slider.edit', $item) }}" class="btn btn-info">Edit</a>
                                             <form action="{{ route('admin.slider.destroy', $item) }}" method="POST"
                                                 class="d-inline-block">
                                                 @csrf
