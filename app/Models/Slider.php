@@ -22,5 +22,10 @@ class Slider extends Model
         return $result;
     }
 
-    public function save($params = null, $options = null) {}
+    public function saveItem($params = null, $options = null)
+    {
+        if ($options['task'] == 'create-item') {
+            self::create($params);
+        }
+    }
 }

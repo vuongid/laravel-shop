@@ -6,7 +6,7 @@
 
 @extends('admin.layouts.main')
 @section('content')
-    <div class="page-header d-print-none mt-0" aria-label="Page header">
+    <div class="page-header d-print-none mt-0 mb-4" aria-label="Page header">
         <div class="container-xl">
             <div class="row g-2 align-items-center">
                 <div class="col">
@@ -16,14 +16,15 @@
                 <!-- Page title actions -->
                 <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
-                        <a href="#" class="btn btn-primary">Thêm mới</a>
+                        <a href="{{ route('admin.slider.create') }}" class="btn btn-primary">Thêm mới</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @include('admin.partials.notify')
     <div class="container-xl">
-        <div class="row row-cards mt-4">
+        <div class="row row-cards mb-4">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="table-responsive">
@@ -67,8 +68,6 @@
                 </div>
             </div>
         </div>
-        <div class="mt-4">
-            {!! $items->links('admin.partials.paginator') !!}
-        </div>
+        {!! $items->links('admin.partials.paginator') !!}
     </div>
 @endsection

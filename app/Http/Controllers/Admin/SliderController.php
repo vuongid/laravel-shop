@@ -53,8 +53,8 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-        //
+        $this->model->saveItem($request->all(), ['task' => 'create-item']);
+        return redirect()->route('admin.slider.index')->with('notify', 'Thêm dữ liệu thành công!');
     }
 
     /**
