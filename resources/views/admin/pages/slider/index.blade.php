@@ -2,6 +2,8 @@
     use App\Helpers\Template;
 
     $items = $params['items'];
+
+    $xhtmlAreaSearch = Template::showAreaSearch('slider', $params['search']);
 @endphp
 
 @extends('admin.layouts.main')
@@ -24,6 +26,10 @@
     </div>
     @include('admin.partials.notify')
     <div class="container-xl">
+        <div class="row mb-4">
+            <div class="col-md-7"></div>
+            <div class="col-md-5">{!! $xhtmlAreaSearch !!}</div>
+        </div>
         <div class="row row-cards mb-4">
             <div class="col-lg-12">
                 <div class="card">
@@ -73,6 +79,7 @@
                 </div>
             </div>
         </div>
-        {!! $items->links('admin.partials.paginator') !!}
+        {!! $items->appends(request()->input())->links('admin.partials.paginator') !!}
+
     </div>
 @endsection

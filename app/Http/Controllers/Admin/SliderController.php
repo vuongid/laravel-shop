@@ -29,8 +29,10 @@ class SliderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $this->params['search']['field']  = $request->input('search_field', '');
+        $this->params['search']['value']  = $request->input('search_value', '');
         $items = $this->model->listItems($this->params, ['task' => 'list-items']);
         $this->params['items'] = $items;
 
