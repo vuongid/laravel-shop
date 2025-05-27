@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SliderRequest;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 
@@ -51,7 +52,7 @@ class SliderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SliderRequest $request)
     {
         $this->model->saveItem($request->all(), ['task' => 'create-item']);
         return redirect()->route('admin.slider.index')->with('notify', 'Thêm dữ liệu thành công!');

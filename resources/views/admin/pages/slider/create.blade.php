@@ -15,7 +15,7 @@
 @endphp
 @extends('admin.layouts.main')
 @section('content')
-    <div class="page-header d-print-none mt-0" aria-label="Page header">
+    <div class="page-header d-print-none mt-0 mb-4" aria-label="Page header">
         <div class="container-xl">
             <div class="row g-2 align-items-center">
                 <div class="col">
@@ -31,8 +31,9 @@
             </div>
         </div>
     </div>
+    @include('admin.partials.error')
     <div class="container-xl">
-        <div class="row row-cards mt-4">
+        <div class="row row-cards">
             <div class="col-md-6">
                 <form method="POST" action="{{ route('admin.slider.store') }}" class="card">
                     @csrf
