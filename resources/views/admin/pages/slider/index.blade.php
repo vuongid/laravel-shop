@@ -58,7 +58,12 @@
                                         <td class="text-secondary">{{ $udpatedAt }}</td>
                                         <td>
                                             <a href="#" class="btn btn-info">Edit</a>
-                                            <a href="#" class="btn btn-danger">Delete</a>
+                                            <form action="{{ route('admin.slider.destroy', $item) }}" method="POST"
+                                                class="d-inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

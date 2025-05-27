@@ -87,6 +87,7 @@ class SliderController extends Controller
      */
     public function destroy(Slider $slider)
     {
-        //
+        $this->model->deleteItem(['item' => $slider], ['task' => 'delete-item']);
+        return redirect()->route('admin.slider.index')->with('notify', 'Xóa dữ liệu thành công!');
     }
 }

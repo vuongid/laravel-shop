@@ -28,4 +28,12 @@ class Slider extends Model
             self::create($params);
         }
     }
+
+    public function deleteItem($params = null, $options = null)
+    {
+        if ($options['task'] == 'delete-item') {
+            $item = self::find($params['item']->id);
+            $item->delete();
+        }
+    }
 }
