@@ -65,7 +65,11 @@ class SliderController extends Controller
      */
     public function show(Slider $slider)
     {
-        //
+        $this->params['item'] = $slider;
+
+        return view($this->viewAction, [
+            'params' => $this->params,
+        ]);
     }
 
     /**

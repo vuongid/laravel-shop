@@ -63,6 +63,8 @@
                                         <td class="text-secondary">{{ $createdAt }}</td>
                                         <td class="text-secondary">{{ $updateAt }}</td>
                                         <td>
+                                            <a href="{{ route('admin.slider.show', $item) }}"
+                                                class="btn btn-indigo">Detail</a>
                                             <a href="{{ route('admin.slider.edit', $item) }}" class="btn btn-info">Edit</a>
                                             <form action="{{ route('admin.slider.destroy', $item) }}" method="POST"
                                                 class="d-inline-block">
