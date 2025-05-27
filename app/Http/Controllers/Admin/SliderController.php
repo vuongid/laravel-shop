@@ -21,7 +21,7 @@ class SliderController extends Controller
         $controller = $routeArr[1];
         $action = $routeArr[2];
         $this->params = $request->all();
-        $this->viewAction =  $module . '.pages.' . $controller . '.' . $action;
+        $this->viewAction =  "$module.pages.$controller.$action";
         $this->params['pagination']['totalItemsPerPage'] = 5;
     }
 
@@ -30,7 +30,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $items = $this->model->listItems($this->params, ['task' => 'admin-list-items']);
+        $items = $this->model->listItems($this->params, ['task' => 'list-items']);
         $this->params['items'] = $items;
 
         return view($this->viewAction, [
@@ -53,6 +53,7 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         //
     }
 
