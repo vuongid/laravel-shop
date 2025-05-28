@@ -2,6 +2,7 @@
     use App\Helpers\Template;
 
     $items = $params['items'];
+    $routeBase = $params['routeBase'];
 
     $xhtmlAreaSearch = Template::showAreaSearch('slider', $params['search']);
 @endphp
@@ -37,7 +38,8 @@
                         <table class="table table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th>Tên</th>
+                                    <th>Image</th>
+                                    <th>{{ __('modules/slider.fields.title') }}</th>
                                     <th>Trạng thái</th>
                                     <th>Ngày tạo</th>
                                     <th>Ngày sửa</th>
@@ -47,7 +49,7 @@
                             <tbody>
                                 @foreach ($items as $item)
                                     @php
-                                        $status = Template::showItemStatus('slider', $item['id'], $item['status']);
+                                        // $status = Template::showItemStatus('slider', $item['id'], $item['status']);
                                         $createdAt = date(
                                             config('shop.format.short_time'),
                                             strtotime($item['created_at']),
@@ -58,15 +60,23 @@
                                         );
                                     @endphp
                                     <tr>
+                                        <td width="10%">
+                                            <img src="{{ $item->getFirstMediaUrl('sliders') }}" alt="">
+                                        </td>
                                         <td class="text-secondary">{{ $item['title'] }}</td>
-                                        <td class="text-secondary">{!! $status !!}</td>
+                                        {{-- <td class="text-secondary">{!! $status !!}</td> --}}
+                                        <td>
+                                            <a href="#"
+                                                class="btn btn-round {{ $item->status->color() }}">{{ $item->status->label() }}
+                                            </a>
+                                        </td>
                                         <td class="text-secondary">{{ $createdAt }}</td>
                                         <td class="text-secondary">{{ $updateAt }}</td>
                                         <td>
-                                            <a href="{{ route('admin.slider.show', $item) }}"
+                                            <a href="{{ route($routeBase . 'show', $item) }}"
                                                 class="btn btn-indigo">Detail</a>
-                                            <a href="{{ route('admin.slider.edit', $item) }}" class="btn btn-info">Edit</a>
-                                            <form action="{{ route('admin.slider.destroy', $item) }}" method="POST"
+                                            <a href="{{ route($routeBase . 'edit', $item) }}" class="btn btn-info">Edit</a>
+                                            <form action="{{ route($routeBase . 'destroy', $item) }}" method="POST"
                                                 class="d-inline-block">
                                                 @csrf
                                                 @method('DELETE')

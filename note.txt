@@ -31,3 +31,13 @@ sliders
     - status (1/2)
     - created_at
     - updated_at
+
+
+lang: https://laravel.com/docs/12.x/localization#main-content
+enum -> model casting: https://laravel.com/docs/12.x/eloquent-mutators#enum-casting
+scope: https://laravel.com/docs/12.x/eloquent#local-scopes
+
+// xoa anh cu, up anh moi
+// xoa du lieu -> xoa media
+
+// registerMediaCollections -> single, fallbackurl

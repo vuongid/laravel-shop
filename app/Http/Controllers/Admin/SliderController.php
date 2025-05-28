@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\GeneralStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SliderRequest;
 use App\Models\Slider;
@@ -22,6 +23,10 @@ class SliderController extends Controller
         $controller = $routeArr[1];
         $action = $routeArr[2];
         $this->params = $request->all();
+        $this->params['module'] = $module;
+        $this->params['controller'] = $controller;
+        $this->params['action'] = $action;
+        $this->params['routeBase'] = "$module.$controller.";
         $this->viewAction =  "$module.pages.$controller.$action";
         $this->params['pagination']['totalItemsPerPage'] = 5;
     }
@@ -56,8 +61,9 @@ class SliderController extends Controller
      */
     public function store(SliderRequest $request)
     {
-        $this->model->saveItem($request->all(), ['task' => 'create-item']);
-        return redirect()->route('admin.slider.index')->with('notify', 'Thêm dữ liệu thành công!');
+        $item = $this->model->saveItem($this->params, ['task' => 'create-item']);
+        $item->addMediaFromRequest('image')->toMediaCollection($this->model->getTable());
+        return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Thêm dữ liệu thành công!');
     }
 
     /**
@@ -89,8 +95,14 @@ class SliderController extends Controller
      */
     public function update(SliderRequest $request, Slider $slider)
     {
-        $this->model->saveItem(['item' => $slider] + $request->all(), ['task' => 'edit-item']);
-        return redirect()->route('admin.slider.index')->with('notify', 'Cập nhật dữ liệu thành công!');
+
+        // dd($request->all());
+        $item = $this->model->saveItem(['item' => $slider] + $request->all(), ['task' => 'edit-item']);
+        if (isset($request->image)) {
+            $item->clearMediaCollection($this->model->getTable());
+            $item->addMediaFromRequest('image')->toMediaCollection($this->model->getTable());
+        }
+        return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
     }
 
     /**
@@ -99,6 +111,6 @@ class SliderController extends Controller
     public function destroy(Slider $slider)
     {
         $this->model->deleteItem(['item' => $slider], ['task' => 'delete-item']);
-        return redirect()->route('admin.slider.index')->with('notify', 'Xóa dữ liệu thành công!');
+        return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Xóa dữ liệu thành công!');
     }
 }

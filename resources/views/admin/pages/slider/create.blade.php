@@ -11,6 +11,7 @@
         Form::input('text', 'title', 'Tên'),
         Form::input('text', 'url', 'Url'),
         Form::select('status', $statusValue, null, 'Trạng thái'),
+        Form::input('file', 'image', 'Upload'),
     ];
 @endphp
 @extends('admin.layouts.main')
@@ -35,7 +36,8 @@
     <div class="container-xl">
         <div class="row row-cards">
             <div class="col-md-6">
-                <form method="POST" action="{{ route('admin.slider.store') }}" class="card">
+                <form method="POST" action="{{ route('admin.slider.store') }}" class="card"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="card-header">
                         <h4 class="card-title">Form</h4>

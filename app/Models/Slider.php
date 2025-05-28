@@ -2,13 +2,33 @@
 
 namespace App\Models;
 
+use App\Enums\GeneralStatus;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Slider extends Model
+class Slider extends Model implements HasMedia
 {
+    use InteractsWithMedia;
     protected $table = 'sliders';
     protected $fillable = ['title', 'url', 'status'];
     protected $fieldSearchAccepted = ['title', 'id'];
+    protected function casts(): array
+    {
+        return [
+            'status' => GeneralStatus::class,
+        ];
+    }
+
+    public function scopeActive($query)
+    {
+        $query->where('status', GeneralStatus::ACTIVE);
+    }
+
+    public function scopeMyActive($query)
+    {
+        $query->where('status', GeneralStatus::ACTIVE);
+    }
 
     public function listItems($params = null, $options = null)
     {
@@ -29,6 +49,9 @@ class Slider extends Model
                 }
             }
 
+            // $query->active();
+            // $query->myActive();
+
             $result = $query->orderBy('id', 'desc')->paginate($params['pagination']['totalItemsPerPage']);
         }
 
@@ -38,12 +61,14 @@ class Slider extends Model
     public function saveItem($params = null, $options = null)
     {
         if ($options['task'] == 'create-item') {
-            self::create($params);
+            return $item = self::create($params);
         }
 
         if ($options['task'] == 'edit-item') {
             $item = self::find($params['item']->id);
             $item->update($params);
+
+            return $item;
         }
     }
 
