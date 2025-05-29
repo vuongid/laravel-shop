@@ -16,27 +16,43 @@ class Form
         return $xhtml;
     }
 
-    public static function input($type, $inputName, $labelName, $inputValue = null)
+    public static function input($type, $inputName, $labelName, $inputAttrs = [], $labelAttrs = [])
     {
+        $inputAttrString = null;
+        $labelAttrString = null;
+
+        if (!empty($inputAttrs)) {
+            foreach ($inputAttrs as $name => $value) {
+                $inputAttrString .= sprintf('%s="%s"', $name, $value);
+            }
+        }
+
+        if (!empty($labelAttrs)) {
+            foreach ($labelAttrs as $name => $value) {
+                $labelAttrString .= sprintf('%s="%s"', $name, $value);
+            }
+        }
+
         $xhtml = sprintf(
             '<div class="mb-3">
-                <label class="form-label">%s</label>
-                <input type="%s" class="form-control" name="%s" value="%s"</div>
+                <label class="form-label" %s>%s</label>
+                <input type="%s" name="%s" class="form-control" %s</div>
             </div>',
+            $labelAttrString,
             $labelName,
             $type,
             $inputName,
-            $inputValue,
+            $inputAttrString,
         );
         return $xhtml;
     }
 
-    public static function select($inputName, $values, $currentValue, $labelName)
+    public static function select($inputName, $options, $currentValue, $labelName)
     {
         $xhtmlOption = null;
-        foreach ($values as $value => $name) {
+        foreach ($options as $value => $text) {
             $selected = ($currentValue == $value) ? 'selected' : '';
-            $xhtmlOption .= sprintf('<option value="%s" %s>%s</option>', $value, $selected, $name);
+            $xhtmlOption .= sprintf('<option value="%s" %s>%s</option>', $value, $selected, $text);
         }
 
         $xhtml = sprintf(

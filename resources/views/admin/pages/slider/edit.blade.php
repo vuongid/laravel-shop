@@ -10,8 +10,8 @@
     ];
 
     $elements = [
-        Form::input('text', 'title', 'Tên', $item['title']),
-        Form::input('text', 'url', 'Url', $item['url']),
+        Form::input('text', 'title', 'Tên', ['value' => $item['title']]),
+        Form::input('text', 'url', 'Url', ['value' => $item['url']]),
         Form::select('status', $statusValue, $item['status'], 'Trạng thái'),
         Form::input('file', 'image', 'Upload'),
     ];
@@ -54,7 +54,5 @@
                 </form>
             </div>
         </div>
-
-
     </div>
 @endsection
