@@ -99,7 +99,7 @@ class SliderController extends Controller
         // dd($request->all());
         $item = $this->model->saveItem(['item' => $slider] + $request->all(), ['task' => 'edit-item']);
         if (isset($request->image)) {
-            $item->clearMediaCollection($this->model->getTable());
+            // $item->clearMediaCollection($this->model->getTable());
             $item->addMediaFromRequest('image')->toMediaCollection($this->model->getTable());
         }
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');

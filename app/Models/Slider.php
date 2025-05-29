@@ -20,6 +20,14 @@ class Slider extends Model implements HasMedia
         ];
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection($this->table)
+            ->singleFile()
+            ->useFallbackUrl(asset('media/default.png'));
+    }
+
     public function scopeActive($query)
     {
         $query->where('status', GeneralStatus::ACTIVE);
