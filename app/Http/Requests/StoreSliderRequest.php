@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SliderRequest extends FormRequest
+class StoreSliderRequest  extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,8 @@ class SliderRequest extends FormRequest
     {
         return [
             'title' => 'required|between:5,255',
-            'url'  => 'bail|required|url',
+            'url'  => 'required',
+            'image'  => 'bail|required|image',
         ];
     }
 
@@ -38,7 +39,7 @@ class SliderRequest extends FormRequest
             'title.required' => 'Tên không được rỗng',
             'title.between'  => 'Tên có độ dài từ :min đến :max ký tự',
             'url.required'   => 'URL không được rỗng',
-            'url.url'        => 'URL không hợp lệ',
+            'image.required' => 'Ảnh không được rỗng',
         ];
     }
 

@@ -7,9 +7,10 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'title' => 'Slider',
+    'title' => 'Quản lý Slider',
     'single' => 'Slider',
     'plural' => 'Sliders',
+    'action' => 'hành động',
 
     // Tên các field
     'fields' => [
@@ -36,4 +37,14 @@ return [
         'updated' => 'Slider đã được cập nhật thành công!',
         'deleted' => 'Slider đã được xóa thành công!',
     ],
+
+    'button' => [
+        'delete' => 'Xóa',
+        'detail' => 'Chi tiết',
+        'edit'   => 'Sửa',
+        'add'    => 'Thêm',
+        'back'   => 'Quay về',
+        'add_new' => 'Thêm mới',
+        'update' => 'Cập nhật',
+    ]
 ];

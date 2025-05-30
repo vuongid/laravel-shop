@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\GeneralStatus;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SliderRequest;
+use App\Http\Requests\StoreSliderRequest;
+use App\Http\Requests\UpdateSliderRequest;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 
@@ -59,7 +60,7 @@ class SliderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SliderRequest $request)
+    public function store(StoreSliderRequest $request)
     {
         $item = $this->model->saveItem($this->params, ['task' => 'create-item']);
         $item->addMediaFromRequest('image')->toMediaCollection($this->model->getTable());
@@ -93,11 +94,11 @@ class SliderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(SliderRequest $request, Slider $slider)
+    public function update(UpdateSliderRequest $request, Slider $slider)
     {
 
         // dd($request->all());
-        $item = $this->model->saveItem(['item' => $slider] + $request->all(), ['task' => 'edit-item']);
+        $item = $this->model->saveItem(['item' => $slider] + $this->params, ['task' => 'edit-item']);
         if (isset($request->image)) {
             // $item->clearMediaCollection($this->model->getTable());
             $item->addMediaFromRequest('image')->toMediaCollection($this->model->getTable());

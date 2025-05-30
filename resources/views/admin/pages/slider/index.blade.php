@@ -14,12 +14,13 @@
             <div class="row g-2 align-items-center">
                 <div class="col">
                     <!-- Page pre-title -->
-                    <h2 class="page-title">Quản Lý Slider</h2>
+                    <h2 class="page-title">{{ __('modules/slider.title') }}</h2>
                 </div>
                 <!-- Page title actions -->
                 <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
-                        <a href="{{ route('admin.slider.create') }}" class="btn btn-primary">Thêm mới</a>
+                        <a href="{{ route($routeBase . 'create') }}"
+                            class="btn btn-primary">{{ __('modules/slider.button.add_new') }}</a>
                     </div>
                 </div>
             </div>
@@ -38,33 +39,31 @@
                         <table class="table table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th>Image</th>
+                                    <th>{{ __('modules/slider.fields.image') }}</th>
                                     <th>{{ __('modules/slider.fields.title') }}</th>
-                                    <th>Trạng thái</th>
-                                    <th>Ngày tạo</th>
-                                    <th>Ngày sửa</th>
-                                    <th>Chức năng</th>
+                                    <th>{{ __('modules/slider.fields.status') }}</th>
+                                    <th>{{ __('modules/slider.fields.created_at') }}</th>
+                                    <th>{{ __('modules/slider.fields.updated_at') }}</th>
+                                    <th>{{ __('modules/slider.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($items as $item)
                                     @php
-                                        // $status = Template::showItemStatus('slider', $item['id'], $item['status']);
                                         $createdAt = date(
                                             config('shop.format.short_time'),
-                                            strtotime($item['created_at']),
+                                            strtotime($item->created_at),
                                         );
                                         $updateAt = date(
                                             config('shop.format.short_time'),
-                                            strtotime($item['updated_at']),
+                                            strtotime($item->updated_at),
                                         );
                                     @endphp
                                     <tr>
                                         <td width="10%">
-                                            <img src="{{ $item->getFirstMediaUrl('sliders') }}" alt="">
+                                            <img src="{{ $item->getFirstMediaUrl('sliders') }}" alt="{{ $item->name }}">
                                         </td>
-                                        <td class="text-secondary">{{ $item['title'] }}</td>
-                                        {{-- <td class="text-secondary">{!! $status !!}</td> --}}
+                                        <td class="text-secondary">{{ $item->title }}</td>
                                         <td>
                                             <a href="#"
                                                 class="btn btn-round {{ $item->status->color() }}">{{ $item->status->label() }}
@@ -74,13 +73,15 @@
                                         <td class="text-secondary">{{ $updateAt }}</td>
                                         <td>
                                             <a href="{{ route($routeBase . 'show', $item) }}"
-                                                class="btn btn-indigo">Detail</a>
-                                            <a href="{{ route($routeBase . 'edit', $item) }}" class="btn btn-info">Edit</a>
+                                                class="btn btn-indigo">{{ __('modules/slider.button.detail') }}</a>
+                                            <a href="{{ route($routeBase . 'edit', $item) }}"
+                                                class="btn btn-info">{{ __('modules/slider.button.edit') }}</a>
                                             <form action="{{ route($routeBase . 'destroy', $item) }}" method="POST"
                                                 class="d-inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit"
+                                                    class="btn btn-danger">{{ __('modules/slider.button.delete') }}</button>
                                             </form>
                                         </td>
                                     </tr>

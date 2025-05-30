@@ -1,17 +1,17 @@
 @php
     use App\Helpers\Template;
     use App\Helpers\Form;
+    use App\Enums\GeneralStatus;
 
-    $statusValue = [
-        '1' => config('shop.template.status.1.name'),
-        '2' => config('shop.template.status.2.name'),
-    ];
+    $routeBase = $params['routeBase'];
+
+    $statuses = GeneralStatus::toArray();
 
     $elements = [
-        Form::input('text', 'title', 'Tên'),
-        Form::input('text', 'url', 'Url'),
-        Form::select('status', $statusValue, null, 'Trạng thái'),
-        Form::input('file', 'image', 'Upload'),
+        Form::input('text', 'title', __('modules/slider.fields.title')),
+        Form::input('text', 'url', __('modules/slider.fields.url')),
+        Form::select('status', $statuses, null, __('modules/slider.fields.status')),
+        Form::input('file', 'image', __('modules/slider.fields.image')),
     ];
 @endphp
 @extends('admin.layouts.main')
@@ -21,12 +21,13 @@
             <div class="row g-2 align-items-center">
                 <div class="col">
                     <!-- Page pre-title -->
-                    <h2 class="page-title">Thêm Slider</h2>
+                    <h2 class="page-title">{{ __('modules/slider.actions.create') }}</h2>
                 </div>
                 <!-- Page title actions -->
                 <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
-                        <a href="{{ route('admin.slider.index') }}" class="btn btn-primary">Quay về</a>
+                        <a href="{{ route($routeBase . 'index') }}"
+                            class="btn btn-primary">{{ __('modules/slider.button.back') }}</a>
                     </div>
                 </div>
             </div>
@@ -36,7 +37,7 @@
     <div class="container-xl">
         <div class="row row-cards">
             <div class="col-md-6">
-                <form method="POST" action="{{ route('admin.slider.store') }}" class="card"
+                <form method="POST" action="{{ route($routeBase . 'store') }}" class="card"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="card-header">
@@ -46,7 +47,8 @@
                         {!! Form::show($elements) !!}
                     </div>
                     <div class="card-footer text-end">
-                        <button type="submit" class="btn btn-primary ms-auto">Thêm</button>
+                        <button type="submit"
+                            class="btn btn-primary ms-auto">{{ __('modules/slider.button.add') }}</button>
                     </div>
                 </form>
             </div>
