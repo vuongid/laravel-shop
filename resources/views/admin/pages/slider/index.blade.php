@@ -1,38 +1,55 @@
 @php
-    use App\Helpers\Template;
+    use App\Helpers\Form;
+    use App\Enums\GeneralStatus;
 
     $items = $params['items'];
     $routeBase = $params['routeBase'];
+    $statuses = GeneralStatus::toArray(true);
 
-    $xhtmlAreaSearch = Template::showAreaSearch('slider', $params['search']);
+    $title = $params['title'] ?? '';
+    $url = $params['url'] ?? '';
+    $status = $params['status'] ?? '';
+    $createdAt = $params['created_at'] ?? '';
+    $updatedAt = $params['updated_at'] ?? '';
+
+    $selectStatus = Form::select('status', $statuses, $status, __('modules/slider.fields.status'));
+
 @endphp
 
 @extends('admin.layouts.main')
 @section('content')
-    <div class="page-header d-print-none mt-0 mb-4" aria-label="Page header">
-        <div class="container-xl">
-            <div class="row g-2 align-items-center">
-                <div class="col">
-                    <!-- Page pre-title -->
-                    <h2 class="page-title">{{ __('modules/slider.title') }}</h2>
-                </div>
-                <!-- Page title actions -->
-                <div class="col-auto ms-auto d-print-none">
-                    <div class="btn-list">
-                        <a href="{{ route($routeBase . 'create') }}"
-                            class="btn btn-primary">{{ __('modules/slider.button.add_new') }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-page-header title="{{ __('modules/slider.title') }}">
+        <a href="{{ route($routeBase . 'create') }}" class="btn btn-primary">{{ __('modules/slider.button.add_new') }}</a>
+    </x-page-header>
     @include('admin.partials.notify')
     <div class="container-xl">
-        <div class="row mb-4">
-            <div class="col-md-7"></div>
-            <div class="col-md-5">{!! $xhtmlAreaSearch !!}</div>
-        </div>
+        <form action="{{ route($routeBase . 'index') }}">
+            <div class="row mb-4">
+                <div class="col-lg-6">
+                    <x-input label="{{ __('modules/slider.fields.title') }}" type="text" value="{{ $title }}"
+                        name="title" />
+                </div>
+                <div class="col-lg-6">
+                    <x-input label="{{ __('modules/slider.fields.url') }}" type="text" value="{{ $url }}"
+                        name="url" />
+                </div>
+                <div class="col-lg-6">
+                    <x-input label="Ngày bắt đầu" type="datetime-local" value="{{ $createdAt }}" name="created_at" />
+                </div>
+                <div class="col-lg-6">
+                    <x-input label="Ngày kết thúc" type="datetime-local" value="{{ $createdAt }}" name="updated_at" />
+                </div>
+                <div class="col-lg-6">
+                    {!! $selectStatus !!}
+                </div>
+                <div class="col-lg-12">
+                    <input type="submit" class="btn btn-primary" value="Tìm kiếm">
+                    <a href="{{ route($routeBase . 'index') }}" class="btn btn-primary">Rest</a>
+                </div>
+            </div>
+        </form>
         <div class="row row-cards mb-4">
+
             <div class="col-lg-12">
                 <div class="card">
                     <div class="table-responsive">
@@ -40,7 +57,7 @@
                             <thead>
                                 <tr>
                                     <th>{{ __('modules/slider.fields.image') }}</th>
-                                    <th>{{ __('modules/slider.fields.title') }}</th>
+                                    <th>Thông tin</th>
                                     <th>{{ __('modules/slider.fields.status') }}</th>
                                     <th>{{ __('modules/slider.fields.created_at') }}</th>
                                     <th>{{ __('modules/slider.fields.updated_at') }}</th>
@@ -63,9 +80,12 @@
                                         <td width="10%">
                                             <img src="{{ $item->getFirstMediaUrl('sliders') }}" alt="{{ $item->name }}">
                                         </td>
-                                        <td class="text-secondary">{{ $item->title }}</td>
+                                        <td class="text-secondary">
+                                            <p>{{ __('modules/slider.fields.title') }} : {{ $item->title }}</p>
+                                            <p>{{ __('modules/slider.fields.url') }} : {{ $item->url }}</p>
+                                        </td>
                                         <td>
-                                            <a href="#"
+                                            <a href="{{ route($routeBase . 'status', ['status' => $item->status, 'id' => $item->id]) }}"
                                                 class="btn btn-round {{ $item->status->color() }}">{{ $item->status->label() }}
                                             </a>
                                         </td>
@@ -93,6 +113,5 @@
             </div>
         </div>
         {!! $items->appends(request()->input())->links('admin.partials.paginator') !!}
-
     </div>
 @endsection

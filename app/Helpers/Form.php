@@ -36,7 +36,7 @@ class Form
         $xhtml = sprintf(
             '<div class="mb-3">
                 <label class="form-label" %s>%s</label>
-                <input type="%s" name="%s" class="form-control" %s</div>
+                <input type="%s" multiple name="%s" class="form-control" %s</div>
             </div>',
             $labelAttrString,
             $labelName,

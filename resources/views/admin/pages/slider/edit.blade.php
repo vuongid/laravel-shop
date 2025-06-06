@@ -5,6 +5,7 @@
 
     $item = $params['item'];
     $routeBase = $params['routeBase'];
+    $name = '213';
 
     $statuses = GeneralStatus::toArray();
 
@@ -12,7 +13,6 @@
         Form::input('text', 'title', __('modules/slider.fields.title'), ['value' => $item->title]),
         Form::input('text', 'url', __('modules/slider.fields.url'), ['value' => $item->url]),
         Form::select('status', $statuses, $item->status->value, __('modules/slider.fields.status')),
-        Form::input('file', 'image', __('modules/slider.fields.image')),
     ];
 @endphp
 @extends('admin.layouts.main')
@@ -47,6 +47,7 @@
                     </div>
                     <div class="card-body">
                         {!! Form::show($elements) !!}
+                        <input type="file" class="filepond-image" name="image" />
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"
@@ -57,3 +58,25 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <style>
+        .filepond--item {
+            width: calc(150px - 0.5em);
+        }
+    </style>
+
+    <script>
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        // Get a reference to the file input element
+        const inputElement = document.querySelector('.filepond-image');
+
+        // Create a FilePond instance
+        const pond = FilePond.create(inputElement, {
+            // Only accept images
+            acceptedFileTypes: ['image/*'],
+            allowReorder: true,
+            storeAsFile: true
+        });
+    </script>
+@endpush

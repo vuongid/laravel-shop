@@ -41,3 +41,7 @@ scope: https://laravel.com/docs/12.x/eloquent#local-scopes
 // xoa du lieu -> xoa media
 
 // registerMediaCollections -> single, fallbackurl
+
+component
+thu vien anh
+quan ly danh muc bai viet

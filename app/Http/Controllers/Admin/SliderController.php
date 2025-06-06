@@ -37,8 +37,6 @@ class SliderController extends Controller
      */
     public function index(Request $request)
     {
-        $this->params['search']['field']  = $request->input('search_field', '');
-        $this->params['search']['value']  = $request->input('search_value', '');
         $items = $this->model->listItems($this->params, ['task' => 'list-items']);
         $this->params['items'] = $items;
 
@@ -63,7 +61,7 @@ class SliderController extends Controller
     public function store(StoreSliderRequest $request)
     {
         $item = $this->model->saveItem($this->params, ['task' => 'create-item']);
-        $item->addMediaFromRequest('image')->toMediaCollection($this->model->getTable());
+        $item->uploadImage();
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Thêm dữ liệu thành công!');
     }
 
@@ -96,12 +94,9 @@ class SliderController extends Controller
      */
     public function update(UpdateSliderRequest $request, Slider $slider)
     {
-
-        // dd($request->all());
         $item = $this->model->saveItem(['item' => $slider] + $this->params, ['task' => 'edit-item']);
-        if (isset($request->image)) {
-            // $item->clearMediaCollection($this->model->getTable());
-            $item->addMediaFromRequest('image')->toMediaCollection($this->model->getTable());
+        if ($request->has('image')) {
+            $item->uploadImage();
         }
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
     }
@@ -113,5 +108,14 @@ class SliderController extends Controller
     {
         $this->model->deleteItem(['item' => $slider], ['task' => 'delete-item']);
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Xóa dữ liệu thành công!');
+    }
+
+    public function status($status, $id)
+    {
+        $this->params['currentStatus'] = $status;
+        $this->params['id'] = $id;
+        $this->model->saveItem($this->params, ['task' => 'change-status']);
+
+        return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
     }
 }

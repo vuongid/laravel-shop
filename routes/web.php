@@ -18,4 +18,6 @@ Route::group([
     'as' => 'admin.'
 ], function () {
     Route::resource('slider', SliderController::class);
+    Route::get('slider/change-status-{status}/{id}', [SliderController::class, 'status'])
+        ->name('slider.status');
 });

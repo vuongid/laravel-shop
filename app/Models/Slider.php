@@ -45,16 +45,20 @@ class Slider extends Model implements HasMedia
         if ($options['task'] == 'list-items') {
             $query = self::select('id', 'title', 'url', 'status', 'created_at', 'updated_at');
 
-            if (!empty($params['search']['value'])) {
-                if ($params['search']['field'] == 'all') {
-                    $query->where(function ($query) use ($params) {
-                        foreach ($this->fieldSearchAccepted as $column) {
-                            $query->orWhere($column, 'LIKE', "%{$params['search']['value']}%");
-                        }
-                    });
-                } elseif (in_array($params['search']['field'], $this->fieldSearchAccepted)) {
-                    $query->where($params['search']['field'], 'LIKE', "%{$params['search']['value']}%");
-                }
+            if (!empty($params['title'])) {
+                $query->where('title', 'LIKE', "%{$params['title']}%");
+            }
+            if (!empty($params['url'])) {
+                $query->where('url', 'LIKE', "%{$params['url']}%");
+            }
+            if (!empty($params['created_at'])) {
+                $query->where('created_at', '>=', "{$params['created_at']}");
+            }
+            if (!empty($params['updated_at'])) {
+                $query->where('updated_at', '<=', "{$params['updated_at']}");
+            }
+            if (!empty($params['status']) && ($params['status'] == GeneralStatus::ACTIVE->value || $params['status'] == GeneralStatus::INACTIVE->value)) {
+                $query->where('status', "{$params['status']}");
             }
 
             // $query->active();
@@ -68,6 +72,11 @@ class Slider extends Model implements HasMedia
 
     public function saveItem($params = null, $options = null)
     {
+        if ($options['task'] == 'change-status') {
+
+            $status = ($params['currentStatus'] == GeneralStatus::ACTIVE->value) ? GeneralStatus::INACTIVE->value : GeneralStatus::ACTIVE->value;
+            self::where('id', $params['id'])->update(['status' => $status]);
+        }
         if ($options['task'] == 'create-item') {
             return $item = self::create($params);
         }
@@ -83,8 +92,13 @@ class Slider extends Model implements HasMedia
     public function deleteItem($params = null, $options = null)
     {
         if ($options['task'] == 'delete-item') {
-            $item = self::find($params['item']->id);
+            $item = $params['item'];
             $item->delete();
         }
+    }
+
+    public function uploadImage($requestKey = 'image')
+    {
+        $this->addMediaFromRequest($requestKey)->toMediaCollection($this->getTable());
     }
 }
