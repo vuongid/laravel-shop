@@ -25,6 +25,7 @@ class StoreSliderRequest  extends FormRequest
             'title' => 'required|between:5,255',
             'url'  => 'required',
             'image'  => 'bail|required|image',
+            // 'slug' => 'nullable|'
         ];
     }
 

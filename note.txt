@@ -45,3 +45,40 @@ scope: https://laravel.com/docs/12.x/eloquent#local-scopes
 component
 thu vien anh
 quan ly danh muc bai viet
+
+
+
+kéo thả category đa cấp, đổi sang sử dụng thư viện khác https://github.com/SortableJS/Sortable
+quản lý bài viết
+editor cho phần nội dung  bài viết, đổi sang sử dụng tinyMCE thay cho ckeditor https://www.tiny.cloud/get-tiny/
+sử dụng thư viện https://unisharp.github.io/laravel-filemanager/ để quản lý hình ảnh, tích hợp vào tinyMCE để chọn được ảnh khi soạn thảo nội dung
+Laravel Media Library: custom lại tên hình ảnh khi lưu (tạo tên có 10 kỹ tự nhiên)
+
+
+Bổ sung slug cho các bảng article_categories, articles
+slug
+- bỏ trống -> chủ động generate từ name hoặc title
+- tự nhập -> cần validate: chỉ chứa a-z0-9 và dấu gạch ngang (-)
+có thể sử dụng thư viện nếu muốn: https://github.com/spatie/laravel-sluggable
+
+- độ dài, độ dai
+- do-dai, do-dai-1, do-dai-2
+
+
+
+article_categories
+- slug
+
+articles
+- slug
+..........
+tags
+- id      
+- name        
+- slug
+
+
+article_tag
+id          article_id              tag_id
+
+có thể sử dụng thư viện: https://spatie.be/docs/laravel-tags/v4/introduction

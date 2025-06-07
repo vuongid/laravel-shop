@@ -28,6 +28,11 @@
                          <span class="nav-link-title">Slider</span>
                      </a>
                  </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.articleCategory.index') }}">
+                         <span class="nav-link-title">Article Category</span>
+                     </a>
+                 </li>
              </ul>
              <!-- END NAVBAR MENU -->
          </div>
