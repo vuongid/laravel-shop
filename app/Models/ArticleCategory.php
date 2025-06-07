@@ -60,6 +60,13 @@ class ArticleCategory extends Model
             $result = self::withDepth()->defaultOrder()->get()->toFlatTree()->pluck('name_with_depth', 'id');
         }
 
+        if ($options['task'] == 'list-categories-edit') {
+            $result = self::withDepth()->defaultOrder()
+                ->where('_lft', '<', $params['item']->_lft)
+                ->orWhere('_rgt', '>', $params['item']->_rgt)
+                ->get()->toFlatTree()->pluck('name_with_depth', 'id');
+        }
+
         return $result;
     }
 
@@ -76,8 +83,11 @@ class ArticleCategory extends Model
         }
 
         if ($options['task'] == 'edit-item') {
-            $item = self::find($params['item']->id);
+            $item = $currentNode = self::find($params['item']->id);
             $item->update($params);
+
+            $parent = self::find($params['parent_id']);
+            if ($currentNode->parent_id != $params['parent_id']) $item->appendToNode($parent)->save();
 
             return $item;
         }

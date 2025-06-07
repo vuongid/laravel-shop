@@ -5,14 +5,14 @@
 
     $item = $params['item'];
     $routeBase = $params['routeBase'];
-    $name = '213';
+    $categories = $params['categories'];
 
     $statuses = GeneralStatus::toArray();
 
     $elements = [
-        Form::input('text', 'title', __('modules/slider.fields.title'), ['value' => $item->title]),
-        Form::input('text', 'url', __('modules/slider.fields.url'), ['value' => $item->url]),
+        Form::input('text', 'name', 'name', ['value' => $item->name]),
         Form::select('status', $statuses, $item->status->value, __('modules/slider.fields.status')),
+        Form::select('parent_id', $categories, $item->parent_id, __('modules/slider.fields.status')),
     ];
 @endphp
 @extends('admin.layouts.main')
@@ -47,7 +47,6 @@
                     </div>
                     <div class="card-body">
                         {!! Form::show($elements) !!}
-                        <input type="file" class="filepond-image" name="image" />
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"

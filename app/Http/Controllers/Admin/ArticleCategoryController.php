@@ -80,9 +80,10 @@ class ArticleCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Slider $slider)
+    public function edit(ArticleCategory $articleCategory)
     {
-        $this->params['item'] = $slider;
+        $this->params['item'] = $articleCategory;
+        $this->params['categories'] = $this->model->listItems($this->params, ['task' => 'list-categories-edit']);
 
         return view($this->viewAction, [
             'params' => $this->params,
@@ -92,9 +93,9 @@ class ArticleCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSliderRequest $request, Slider $slider)
+    public function update(Request $request, ArticleCategory $articleCategory)
     {
-        $item = $this->model->saveItem(['item' => $slider] + $this->params, ['task' => 'edit-item']);
+        $item = $this->model->saveItem(['item' => $articleCategory] + $this->params, ['task' => 'edit-item']);
 
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
     }
@@ -102,9 +103,9 @@ class ArticleCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Slider $slider)
+    public function destroy(ArticleCategory $articleCategory)
     {
-        $this->model->deleteItem(['item' => $slider], ['task' => 'delete-item']);
+        $this->model->deleteItem(['item' => $articleCategory], ['task' => 'delete-item']);
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Xóa dữ liệu thành công!');
     }
 
