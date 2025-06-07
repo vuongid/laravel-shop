@@ -53,6 +53,7 @@
                             <thead>
                                 <tr>
                                     <th>name</th>
+                                    <th>order</th>
                                     <th>{{ __('modules/slider.fields.status') }}</th>
                                     <th>{{ __('modules/slider.action') }}</th>
                                 </tr>
@@ -63,6 +64,7 @@
                                         <td class="text-secondary">
                                             {{ str_repeat('/-----', $item->depth) . $item->name }}
                                         </td>
+                                        <td>@include('admin.pages.articleCategory.partials.index.order')</td>
                                         <td>
                                             <a href="{{ route($routeBase . 'status', ['status' => $item->status, 'id' => $item->id]) }}"
                                                 class="btn btn-round {{ $item->status->color() }}">{{ $item->status->label() }}

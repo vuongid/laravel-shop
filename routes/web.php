@@ -27,4 +27,6 @@ Route::group([
     Route::resource('articleCategory', ArticleCategoryController::class);
     Route::get('articleCategory/change-status-{status}/{id}', [ArticleCategoryController::class, 'status'])
         ->name('articleCategory.status');
+    Route::get('articleCategory/move/{articleCategory}/{type}', [ArticleCategoryController::class, 'move'])
+        ->name('articleCategory.move');
 });

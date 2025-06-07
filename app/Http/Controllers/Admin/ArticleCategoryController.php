@@ -117,4 +117,15 @@ class ArticleCategoryController extends Controller
 
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
     }
+
+    public function move(ArticleCategory $articleCategory, $type)
+    {
+        if ($type == 'up') {
+            $articleCategory->up();
+        } else {
+            $articleCategory->down();
+        }
+
+        return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
+    }
 }
