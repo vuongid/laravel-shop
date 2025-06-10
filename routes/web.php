@@ -29,4 +29,6 @@ Route::group([
         ->name('articleCategory.status');
     Route::get('articleCategory/move/{articleCategory}/{type}', [ArticleCategoryController::class, 'move'])
         ->name('articleCategory.move');
+    Route::post('articleCategory/updateTree', [ArticleCategoryController::class, 'updateTree'])
+        ->name('articleCategory.updateTree');
 });

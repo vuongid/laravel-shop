@@ -128,4 +128,12 @@ class ArticleCategoryController extends Controller
 
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
     }
+
+    public function updateTree(Request $request)
+    {
+        $data = $request->data;
+        $root = ArticleCategory::find(1);
+        ArticleCategory::rebuildSubtree($root, $data);
+        return response()->json($data);
+    }
 }

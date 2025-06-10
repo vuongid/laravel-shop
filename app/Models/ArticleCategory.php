@@ -35,7 +35,7 @@ class ArticleCategory extends Model
         $result = null;
 
         if ($options['task'] == 'list-items') {
-            $query = self::withDepth()->defaultOrder();
+            $query = self::withDepth()->having('depth', '>', 0)->defaultOrder();
 
             if (!empty($params['name'])) {
                 $query->where('name', 'LIKE', "%{$params['name']}%");
@@ -53,7 +53,7 @@ class ArticleCategory extends Model
                 $query->where('status', "{$params['status']}");
             }
 
-            $result = $query->get()->toFlatTree();
+            $result = $query->get()->toTree();
         }
 
         if ($options['task'] == 'list-categories') {

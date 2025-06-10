@@ -90,6 +90,39 @@
                     </div>
                 </div>
             </div>
+
+            <div class="dd" id="nestable-category" data-url="{{ route($routeBase . 'updateTree') }}">
+                <ol class="dd-list">
+                    @foreach ($items as $item)
+                        @include('admin.pages.articleCategory.partials.index.list_item', ['item' => $item])
+                    @endforeach
+
+                </ol>
+            </div>
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            let categoryTree = $('#nestable-category');
+            categoryTree.nestable({}).on('change', function() {
+                let dataSend = categoryTree.nestable('serialize');
+                $.ajax({
+                    type: "POST",
+                    url: categoryTree.data('url'),
+                    data: {
+                        data: dataSend,
+                        _token: $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    dateType: "json",
+                    success: function(response) {
+                        console.log(response);
+                    }
+                })
+            });
+
+        });
+    </script>
+@endpush
