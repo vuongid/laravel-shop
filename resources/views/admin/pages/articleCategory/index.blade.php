@@ -23,29 +23,36 @@
     </x-page-header>
     @include('admin.partials.notify')
     <div class="container-xl">
-        <form action="{{ route($routeBase . 'index') }}">
-            <div class="row mb-4">
-                <div class="col-lg-6">
-                    <x-input label="{{ __('modules/slider.fields.title') }}" type="text" value="{{ $title }}"
-                        name="name" />
+        <button class="btn btn-outline-secondary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse"
+            aria-expanded="false" aria-controls="searchCollapse">
+            Tìm kiếm nâng cao
+        </button>
+        <div class="collapse" id="searchCollapse">
+            <form action="{{ route($routeBase . 'index') }}">
+                <div class="row mb-4">
+                    <div class="col-lg-6">
+                        <x-input label="{{ __('modules/slider.fields.title') }}" type="text" value="{{ $title }}"
+                            name="name" />
+                    </div>
+                    <div class="col-lg-6">
+                        {!! $selectStatus !!}
+                    </div>
+                    <div class="col-lg-6">
+                        <x-input label="Ngày bắt đầu" type="datetime-local" value="{{ $createdAt }}" name="created_at" />
+                    </div>
+                    <div class="col-lg-6">
+                        <x-input label="Ngày kết thúc" type="datetime-local" value="{{ $createdAt }}"
+                            name="updated_at" />
+                    </div>
+                    <div class="col-lg-12">
+                        <input type="submit" class="btn btn-primary" value="Tìm kiếm">
+                        <a href="{{ route($routeBase . 'index') }}" class="btn btn-primary">Rest</a>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    {!! $selectStatus !!}
-                </div>
-                <div class="col-lg-6">
-                    <x-input label="Ngày bắt đầu" type="datetime-local" value="{{ $createdAt }}" name="created_at" />
-                </div>
-                <div class="col-lg-6">
-                    <x-input label="Ngày kết thúc" type="datetime-local" value="{{ $createdAt }}" name="updated_at" />
-                </div>
-                <div class="col-lg-12">
-                    <input type="submit" class="btn btn-primary" value="Tìm kiếm">
-                    <a href="{{ route($routeBase . 'index') }}" class="btn btn-primary">Rest</a>
-                </div>
-            </div>
-        </form>
-        <div class="row row-cards mb-4">
+            </form>
+        </div>
 
+        <div class="row row-cards mb-4">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="table-responsive">
