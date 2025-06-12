@@ -45,7 +45,8 @@
                             value="{{ $item->url }}" />
                         <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status"
                             value="{{ $item->status->value }}" />
-                        <x-input type="file" class="filepond-image" name="image" />
+                        <x-input type="file" class="filepond-image" name="image" data-url="s"
+                            data-image="{{ $item->getFirstMediaUrl('sliders') }}" />
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"
@@ -68,13 +69,16 @@
         FilePond.registerPlugin(FilePondPluginImagePreview);
         // Get a reference to the file input element
         const inputElement = document.querySelector('.filepond-image');
-
+        const imageCurrent = inputElement.dataset.image;
         // Create a FilePond instance
         const pond = FilePond.create(inputElement, {
             // Only accept images
             acceptedFileTypes: ['image/*'],
             allowReorder: true,
-            storeAsFile: true
+            storeAsFile: true,
+            files: [{
+                source: imageCurrent,
+            }]
         });
     </script>
 @endpush
