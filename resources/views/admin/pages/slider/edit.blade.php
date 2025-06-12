@@ -5,15 +5,8 @@
 
     $item = $params['item'];
     $routeBase = $params['routeBase'];
-    $name = '213';
-
     $statuses = GeneralStatus::toArray();
 
-    $elements = [
-        Form::input('text', 'title', __('modules/slider.fields.title'), ['value' => $item->title]),
-        Form::input('text', 'url', __('modules/slider.fields.url'), ['value' => $item->url]),
-        Form::select('status', $statuses, $item->status->value, __('modules/slider.fields.status')),
-    ];
 @endphp
 @extends('admin.layouts.main')
 @section('content')
@@ -46,8 +39,13 @@
                         <h4 class="card-title">Form</h4>
                     </div>
                     <div class="card-body">
-                        {!! Form::show($elements) !!}
-                        <input type="file" class="filepond-image" name="image" />
+                        <x-input label="{{ __('modules/slider.fields.title') }}" name="title" type="text"
+                            value="{{ $item->title }}" />
+                        <x-input label="{{ __('modules/slider.fields.url') }}" name="url" type="text"
+                            value="{{ $item->url }}" />
+                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status"
+                            type="text" value="{{ $item->status->value }}" />
+                        <x-input type="file" class="filepond-image" name="image" />
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"

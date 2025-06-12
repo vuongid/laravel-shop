@@ -4,15 +4,8 @@
     use App\Enums\GeneralStatus;
 
     $routeBase = $params['routeBase'];
-
     $statuses = GeneralStatus::toArray();
 
-    $elements = [
-        Form::input('text', 'title', __('modules/slider.fields.title')),
-        Form::input('text', 'url', __('modules/slider.fields.url')),
-        Form::select('status', $statuses, null, __('modules/slider.fields.status')),
-        // Form::input('file', 'image', __('modules/slider.fields.image')),
-    ];
 @endphp
 @extends('admin.layouts.main')
 @section('content')
@@ -29,12 +22,11 @@
                         <h4 class="card-title">Form</h4>
                     </div>
                     <div class="card-body">
-                        {!! Form::show($elements) !!}
-                        {{-- <x-input label="ss" type="text" value="abc" name="title" class="text-danger" />
-                        <x-input label="" type="text" value="abc" name="title" class="text-danger" />
-                        <x-input type="text" value="abc" name="title" class="text-danger" /> --}}
-                        {{-- <x-input /> --}}
-                        <input type="file" class="filepond-image" name="image" />
+                        <x-input label="{{ __('modules/slider.fields.title') }}" name="title" type="text" />
+                        <x-input label="{{ __('modules/slider.fields.url') }}" name="url" type="text" />
+                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status"
+                            type="text" />
+                        <x-input type="file" class="filepond-image" name="image" />
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"
