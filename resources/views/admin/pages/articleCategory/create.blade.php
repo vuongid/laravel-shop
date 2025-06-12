@@ -5,14 +5,8 @@
 
     $routeBase = $params['routeBase'];
     $categories = $params['categories'];
-
     $statuses = GeneralStatus::toArray();
 
-    $elements = [
-        Form::input('text', 'name', 'name'),
-        Form::select('status', $statuses, null, __('modules/slider.fields.status')),
-        Form::select('parent_id', $categories, null, __('modules/slider.fields.status')),
-    ];
 @endphp
 @extends('admin.layouts.main')
 @section('content')
@@ -29,7 +23,9 @@
                         <h4 class="card-title">Form</h4>
                     </div>
                     <div class="card-body">
-                        {!! Form::show($elements) !!}
+                        <x-input label="{{ __('modules/slider.fields.title') }}" name="name" type="text" />
+                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status" />
+                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$categories" name="parent_id" />
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"

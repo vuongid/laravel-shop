@@ -46,7 +46,12 @@
                         <h4 class="card-title">Form</h4>
                     </div>
                     <div class="card-body">
-                        {!! Form::show($elements) !!}
+                        <x-input label="{{ __('modules/slider.fields.title') }}" name="name" type="text"
+                            value="{{ $item->name }}" />
+                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status"
+                            value="{{ $item->status->value }}" />
+                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$categories" name="parent_id"
+                            value="{{ $item->parent_id }}" />
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"

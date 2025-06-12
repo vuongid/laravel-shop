@@ -12,8 +12,6 @@
     $createdAt = $params['created_at'] ?? '';
     $updatedAt = $params['updated_at'] ?? '';
 
-    $selectStatus = Form::select('status', $statuses, $status, __('modules/slider.fields.status'));
-
 @endphp
 
 @extends('admin.layouts.main')
@@ -35,7 +33,8 @@
                             name="name" />
                     </div>
                     <div class="col-lg-6">
-                        {!! $selectStatus !!}
+                        <x-select label="{{ __('modules/slider.fields.status') }}" name="status" :options="$statuses"
+                            value="{{ $status }}" />
                     </div>
                     <div class="col-lg-6">
                         <x-input label="Ngày bắt đầu" type="datetime-local" value="{{ $createdAt }}" name="created_at" />

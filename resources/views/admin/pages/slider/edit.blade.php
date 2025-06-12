@@ -44,7 +44,7 @@
                         <x-input label="{{ __('modules/slider.fields.url') }}" name="url" type="text"
                             value="{{ $item->url }}" />
                         <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status"
-                            type="text" value="{{ $item->status->value }}" />
+                            value="{{ $item->status->value }}" />
                         <x-input type="file" class="filepond-image" name="image" />
                     </div>
                     <div class="card-footer text-end">
