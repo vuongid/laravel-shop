@@ -12,7 +12,6 @@
     <x-page-header title="{{ __('modules/slider.actions.create') }}">
         <a href="{{ route($routeBase . 'index') }}" class="btn btn-primary">{{ __('modules/slider.button.back') }}</a>
     </x-page-header>
-    @include('admin.partials.error')
     <div class="container-xl">
         <div class="row row-cards">
             <div class="col-md-6">

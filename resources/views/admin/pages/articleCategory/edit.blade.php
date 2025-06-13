@@ -34,7 +34,6 @@
             </div>
         </div>
     </div>
-    @include('admin.partials.error')
     <div class="container-xl">
         <div class="row row-cards">
             <div class="col-md-6">
