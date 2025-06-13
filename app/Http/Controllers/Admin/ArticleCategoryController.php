@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\GeneralStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleCategoryRequest;
-use App\Http\Requests\StoreSliderRequest;
-use App\Http\Requests\UpdateSliderRequest;
+use App\Http\Requests\UpdateArticleCategoryRequest;
 use App\Models\ArticleCategory;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -94,7 +92,7 @@ class ArticleCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ArticleCategory $articleCategory)
+    public function update(UpdateArticleCategoryRequest $request, ArticleCategory $articleCategory)
     {
         $item = $this->model->saveItem(['item' => $articleCategory] + $this->params, ['task' => 'edit-item']);
 
