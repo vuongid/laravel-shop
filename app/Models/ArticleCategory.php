@@ -80,14 +80,7 @@ class ArticleCategory extends Model
         }
         if ($options['task'] == 'create-item') {
             if (empty($params['slug'])) {
-                $slug = Str::slug($params['name']);
-                $originalSlug = $slug;
-                $counter = 1;
-                while (self::where('slug', $slug)->exists()) {
-                    $slug = $originalSlug . '-' . $counter;
-                    $counter++;
-                }
-                $params['slug'] = $slug;
+                $params['slug'] = $this->generateUniqueSlug($params['name']);
             }
             $parent = self::find($params['parent_id']);
 
@@ -96,6 +89,9 @@ class ArticleCategory extends Model
 
         if ($options['task'] == 'edit-item') {
             $item = $currentNode = self::find($params['item']->id);
+            if (empty($params['slug'])) {
+                $params['slug'] = $this->generateUniqueSlug($params['name'], $item->id);
+            }
             $item->update($params);
 
             $parent = self::find($params['parent_id']);
@@ -116,5 +112,29 @@ class ArticleCategory extends Model
     public function getNameWithDepthAttribute()
     {
         return str_repeat('/----- ', $this->depth) . $this->name;
+    }
+
+    private function generateUniqueSlug($name, $excludeId = null)
+    {
+        $slug = Str::slug($name);
+        $originalSlug = $slug;
+        $counter = 1;
+
+        $query = self::where('slug', $slug);
+        if ($excludeId) {
+            $query->where('id', '!=', $excludeId);
+        }
+
+        while ($query->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+
+            $query = self::where('slug', $slug);
+            if ($excludeId) {
+                $query->where('id', '!=', $excludeId);
+            }
+        }
+
+        return $slug;
     }
 }

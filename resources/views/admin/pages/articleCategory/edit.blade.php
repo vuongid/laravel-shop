@@ -48,6 +48,7 @@
                     <div class="card-body">
                         <x-input label="{{ __('modules/slider.fields.title') }}" name="name" type="text"
                             value="{{ $item->name }}" />
+                        <x-input label="slug" name="slug" type="text" value="{{ $item->slug }}" />
                         <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status"
                             value="{{ $item->status->value }}" />
                         <x-select label="{{ __('modules/slider.fields.status') }}" :options="$categories" name="parent_id"
