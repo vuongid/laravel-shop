@@ -5,13 +5,14 @@ namespace App\Models;
 use App\Enums\GeneralStatus;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
+use Illuminate\Support\Str;
 
 class ArticleCategory extends Model
 {
     use NodeTrait;
 
     protected $table = 'article_categories';
-    protected $fillable = ['name', 'status'];
+    protected $fillable = ['name', 'status', 'slug'];
     protected $fieldSearchAccepted = ['name', 'id'];
     protected function casts(): array
     {
@@ -78,7 +79,18 @@ class ArticleCategory extends Model
             self::where('id', $params['id'])->update(['status' => $status]);
         }
         if ($options['task'] == 'create-item') {
+            if (empty($params['slug'])) {
+                $slug = Str::slug($params['name']);
+                $originalSlug = $slug;
+                $counter = 1;
+                while (self::where('slug', $slug)->exists()) {
+                    $slug = $originalSlug . '-' . $counter;
+                    $counter++;
+                }
+                $params['slug'] = $slug;
+            }
             $parent = self::find($params['parent_id']);
+
             return $item = self::create($params, $parent);
         }
 
