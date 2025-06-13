@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\GeneralStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreArticleCategoryRequest;
 use App\Http\Requests\StoreSliderRequest;
 use App\Http\Requests\UpdateSliderRequest;
 use App\Models\ArticleCategory;
@@ -59,7 +60,7 @@ class ArticleCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreArticleCategoryRequest $request)
     {
         $item = $this->model->saveItem($this->params, ['task' => 'create-item']);
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Thêm dữ liệu thành công!');
