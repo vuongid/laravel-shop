@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ArticleCategoryController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\ArticleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,6 +14,11 @@ Route::get('/', function () {
 // Route::prefix('admin')->group(function () {
 //     Route::resource('slider', SliderController::class);
 // });
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+
 
 Route::group([
     'prefix' => 'admin',
@@ -31,4 +37,9 @@ Route::group([
         ->name('articleCategory.move');
     Route::post('articleCategory/updateTree', [ArticleCategoryController::class, 'updateTree'])
         ->name('articleCategory.updateTree');
+
+    // ================= ARTICLE =================
+    Route::resource('article', ArticleController::class);
+    Route::get('article/change-status-{status}/{id}', [ArticleController::class, 'status'])
+        ->name('article.status');
 });

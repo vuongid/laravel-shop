@@ -38,6 +38,15 @@ return [
             'report' => false,
         ],
 
+        'upload' => [
+            'driver' => 'local',
+            'root' => public_path('upload'),
+            'url' => '/upload',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         'media' => [
             'driver' => 'local',
             'root' => public_path('media'),

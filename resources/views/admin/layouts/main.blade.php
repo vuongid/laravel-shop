@@ -10,6 +10,7 @@
 <html lang="en">
 
 @include('admin.layouts.head')
+@stack('style')
 
 <body class="layout-fluid">
     <div class="page">

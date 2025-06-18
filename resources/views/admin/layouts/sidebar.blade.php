@@ -33,6 +33,11 @@
                          <span class="nav-link-title">Article Category</span>
                      </a>
                  </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.article.index') }}">
+                         <span class="nav-link-title">Article</span>
+                     </a>
+                 </li>
              </ul>
              <!-- END NAVBAR MENU -->
          </div>
