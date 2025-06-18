@@ -6,6 +6,7 @@ use App\Enums\GeneralStatus;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Support\Str;
 
 class Article extends Model implements HasMedia
 {
@@ -60,6 +61,10 @@ class Article extends Model implements HasMedia
             $result = $query->orderBy('id', 'desc')->paginate($params['pagination']['totalItemsPerPage']);
         }
 
+        if ($options['task'] == 'list-items-article-category') {
+            return ArticleCategory::pluck('name', 'id')->toArray();
+        }
+
         return $result;
     }
 
@@ -71,6 +76,9 @@ class Article extends Model implements HasMedia
             self::where('id', $params['id'])->update(['status' => $status]);
         }
         if ($options['task'] == 'create-item') {
+            if (empty($params['slug'])) {
+                $params['slug'] = $this->generateUniqueSlug($params['title']);
+            }
             return $item = self::create($params);
         }
 
@@ -93,5 +101,29 @@ class Article extends Model implements HasMedia
     public function uploadImage($requestKey = 'image')
     {
         $this->addMediaFromRequest($requestKey)->toMediaCollection($this->getTable());
+    }
+
+    private function generateUniqueSlug($name, $excludeId = null)
+    {
+        $slug = Str::slug($name);
+        $originalSlug = $slug;
+        $counter = 1;
+
+        $query = self::where('slug', $slug);
+        if ($excludeId) {
+            $query->where('id', '!=', $excludeId);
+        }
+
+        while ($query->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+
+            $query = self::where('slug', $slug);
+            if ($excludeId) {
+                $query->where('id', '!=', $excludeId);
+            }
+        }
+
+        return $slug;
     }
 }

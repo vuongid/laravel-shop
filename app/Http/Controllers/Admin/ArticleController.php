@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\GeneralStatus;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreSliderRequest;
+use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateSliderRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
@@ -50,6 +49,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
+        $this->params['articleCategories'] = $this->model->listItems($this->params, ['task' => 'list-items-article-category']);
+
         return view($this->viewAction, [
             'params' => $this->params,
         ]);
@@ -58,7 +59,7 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreArticleRequest $request)
     {
         $item = $this->model->saveItem($this->params, ['task' => 'create-item']);
         $item->uploadImage();

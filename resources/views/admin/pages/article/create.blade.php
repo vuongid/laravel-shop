@@ -5,6 +5,7 @@
 
     $routeBase = $params['routeBase'];
     $statuses = GeneralStatus::toArray();
+    $articleCategories = $params['articleCategories'];
 
 @endphp
 @extends('admin.layouts.main')
@@ -22,8 +23,8 @@
                     </div>
                     <div class="card-body">
                         <x-input label="{{ __('modules/slider.fields.title') }}" name="title" type="text" />
+                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$articleCategories" name="category_id" />
                         <x-input label="description" name="description" type="text" />
-                        <x-input label="{{ __('modules/slider.fields.url') }}" name="url" type="text" />
                         <x-input label="slug" name="slug" type="text" />
                         <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status" />
                         <x-input type="file" class="filepond-image" name="image" />
