@@ -30,7 +30,7 @@
     @include('admin.partials.notify')
     <div class="container-xl">
         <div class="row row-cards mb-4">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="table-responsive">
                         <table class="table table-vcenter card-table">
@@ -42,13 +42,21 @@
                                 <tr>
                                     <th>{{ __('modules/slider.fields.image') }}</th>
                                     <td>
-                                        <img src="{{ $item->getFirstMediaUrl('sliders') }}" alt="{{ $item->name }}"
+                                        <img src="{{ $item->getFirstMediaUrl('articles') }}" alt="{{ $item->name }}"
                                             style="max-width: 200px; max-height: 150px; object-fit: contain;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>{{ __('modules/slider.fields.title') }}</th>
                                     <td class="text-secondary">{{ $item->title }}</td>
+                                </tr>
+                                <tr>
+                                    <th>description</th>
+                                    <td class="text-secondary">{{ $item->description }}</td>
+                                </tr>
+                                <tr>
+                                    <th>slug</th>
+                                    <td class="text-secondary">{{ $item->slug }}</td>
                                 </tr>
                                 <tr>
                                     <th>{{ __('modules/slider.fields.status') }}</th>
@@ -83,6 +91,9 @@
                                                 class="btn btn-danger">{{ __('modules/slider.button.delete') }}</button>
                                         </form>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>{!! $item->content !!}</td>
                                 </tr>
                             </tbody>
                         </table>
