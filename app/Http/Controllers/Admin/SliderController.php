@@ -61,7 +61,7 @@ class SliderController extends Controller
     public function store(StoreSliderRequest $request)
     {
         $item = $this->model->saveItem($this->params, ['task' => 'create-item']);
-        $item->uploadImage();
+        $item->uploadImage($request->file('image'));
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Thêm dữ liệu thành công!');
     }
 
@@ -96,7 +96,7 @@ class SliderController extends Controller
     {
         $item = $this->model->saveItem(['item' => $slider] + $this->params, ['task' => 'edit-item']);
         if ($request->has('image')) {
-            $item->uploadImage();
+            $item->uploadImage($request->file('image'));
         }
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
     }

@@ -104,9 +104,14 @@ class Article extends Model implements HasMedia
         }
     }
 
-    public function uploadImage($requestKey = 'image')
+    public function uploadImage($file)
     {
-        $this->addMediaFromRequest($requestKey)->toMediaCollection($this->getTable());
+        $ext = $file->getClientOriginalExtension();
+        $randomName = Str::random(10) . '.' . $ext;
+
+        $this->addMedia($file)
+            ->usingFileName($randomName)
+            ->toMediaCollection($this->getTable());
     }
 
     private function generateUniqueSlug($name, $excludeId = null)
