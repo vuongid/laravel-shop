@@ -43,10 +43,16 @@ class Article extends Model implements HasMedia
         $result = null;
 
         if ($options['task'] == 'list-items') {
-            $query = self::select('id', 'title', 'status', 'created_at', 'updated_at');
+            $query = self::select('id', 'title', 'description', 'slug', 'status', 'created_at', 'updated_at');
 
             if (!empty($params['title'])) {
                 $query->where('title', 'LIKE', "%{$params['title']}%");
+            }
+            if (!empty($params['description'])) {
+                $query->where('description', 'LIKE', "%{$params['description']}%");
+            }
+            if (!empty($params['slug'])) {
+                $query->where('slug', 'LIKE', "%{$params['slug']}%");
             }
             if (!empty($params['created_at'])) {
                 $query->where('created_at', '>=', "{$params['created_at']}");

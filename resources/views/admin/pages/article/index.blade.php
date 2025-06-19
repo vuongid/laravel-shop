@@ -7,10 +7,13 @@
     $statuses = GeneralStatus::toArray(true);
 
     $title = $params['title'] ?? '';
-    $url = $params['url'] ?? '';
+    $slug = $params['slug'] ?? '';
     $status = $params['status'] ?? '';
+    $description = $params['description'] ?? '';
     $createdAt = $params['created_at'] ?? '';
     $updatedAt = $params['updated_at'] ?? '';
+
+    // dd($items);
 
 @endphp
 
@@ -33,19 +36,22 @@
                             name="title" />
                     </div>
                     <div class="col-lg-6">
-                        <x-input label="{{ __('modules/slider.fields.url') }}" type="text" value="{{ $url }}"
-                            name="url" />
+                        <x-input label="slug" type="text" value="{{ $slug }}" name="slug" />
                     </div>
                     <div class="col-lg-6">
-                        <x-input label="Ngày bắt đầu" type="datetime-local" value="{{ $createdAt }}" name="created_at" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-input label="Ngày kết thúc" type="datetime-local" value="{{ $createdAt }}"
-                            name="updated_at" />
+                        <x-input label="description" type="text" value="{{ $description }}" name="description" />
                     </div>
                     <div class="col-lg-6">
                         <x-select label="{{ __('modules/slider.fields.status') }}" name="status" :options="$statuses"
                             value="{{ $status }}" />
+                    </div>
+                    <div class="col-lg-6">
+                        <x-input label="Ngày bắt đầu" type="datetime-local" value="{{ $createdAt }}"
+                            name="created_at" />
+                    </div>
+                    <div class="col-lg-6">
+                        <x-input label="Ngày kết thúc" type="datetime-local" value="{{ $createdAt }}"
+                            name="updated_at" />
                     </div>
                     <div class="col-lg-12">
                         <input type="submit" class="btn btn-primary" value="Tìm kiếm">
@@ -66,8 +72,6 @@
                                     <th>{{ __('modules/slider.fields.image') }}</th>
                                     <th>Thông tin</th>
                                     <th>{{ __('modules/slider.fields.status') }}</th>
-                                    <th>{{ __('modules/slider.fields.created_at') }}</th>
-                                    <th>{{ __('modules/slider.fields.updated_at') }}</th>
                                     <th>{{ __('modules/slider.action') }}</th>
                                 </tr>
                             </thead>
@@ -85,19 +89,19 @@
                                     @endphp
                                     <tr>
                                         <td width="10%">
-                                            <img src="{{ $item->getFirstMediaUrl('sliders') }}" alt="{{ $item->name }}">
+                                            <img src="{{ $item->getFirstMediaUrl('articles') }}"
+                                                alt="{{ $item->name }}">
                                         </td>
                                         <td class="text-secondary">
                                             <p>{{ __('modules/slider.fields.title') }} : {{ $item->title }}</p>
-                                            <p>{{ __('modules/slider.fields.url') }} : {{ $item->url }}</p>
+                                            <p>Miêu tả : {{ $item->description }}</p>
+                                            <p>Slug : {{ $item->slug }}</p>
                                         </td>
                                         <td>
                                             <a href="{{ route($routeBase . 'status', ['status' => $item->status, 'id' => $item->id]) }}"
                                                 class="btn btn-round {{ $item->status->color() }}">{{ $item->status->label() }}
                                             </a>
                                         </td>
-                                        <td class="text-secondary">{{ $createdAt }}</td>
-                                        <td class="text-secondary">{{ $updateAt }}</td>
                                         <td>
                                             <a href="{{ route($routeBase . 'show', $item) }}"
                                                 class="btn btn-indigo">{{ __('modules/slider.button.detail') }}</a>
