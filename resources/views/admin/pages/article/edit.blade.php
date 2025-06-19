@@ -6,7 +6,7 @@
     $item = $params['item'];
     $routeBase = $params['routeBase'];
     $statuses = GeneralStatus::toArray();
-
+    $articleCategories = $params['articleCategories'];
 @endphp
 @extends('admin.layouts.main')
 @section('content')
@@ -40,12 +40,14 @@
                     <div class="card-body">
                         <x-input label="{{ __('modules/slider.fields.title') }}" name="title" type="text"
                             value="{{ $item->title }}" />
-                        <x-input label="{{ __('modules/slider.fields.url') }}" name="url" type="text"
-                            value="{{ $item->url }}" />
+                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$articleCategories" name="category_id"
+                            value="{{ $item->category_id }}" />
+                        <x-input label="description" name="description" type="text" value="{{ $item->description }}" />
+                        <x-input label="slug" name="slug" type="text" value="{{ $item->slug }}" />
                         <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status"
                             value="{{ $item->status->value }}" />
                         <x-input type="file" class="filepond-image" name="image" data-url="s"
-                            data-image="{{ $item->getFirstMediaUrl('sliders') }}" />
+                            data-image="{{ $item->getFirstMediaUrl('articles') }}" />
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"

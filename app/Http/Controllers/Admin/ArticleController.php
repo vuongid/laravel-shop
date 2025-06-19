@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Requests\UpdateSliderRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
@@ -84,6 +85,7 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         $this->params['item'] = $article;
+        $this->params['articleCategories'] = $this->model->listItems($this->params, ['task' => 'list-items-article-category']);
 
         return view($this->viewAction, [
             'params' => $this->params,
@@ -93,7 +95,7 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSliderRequest $request, Article $article)
+    public function update(UpdateArticleRequest $request, Article $article)
     {
         $item = $this->model->saveItem(['item' => $article] + $this->params, ['task' => 'edit-item']);
         if ($request->has('image')) {
