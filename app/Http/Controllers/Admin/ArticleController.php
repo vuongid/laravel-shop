@@ -30,6 +30,8 @@ class ArticleController extends Controller
         $this->params['routeBase'] = "$module.$controller.";
         $this->viewAction =  "$module.pages.$controller.$action";
         $this->params['pagination']['totalItemsPerPage'] = 5;
+        $this->params['table'] = 'articles';
+        $this->params['langPath'] = 'modules/article.';
     }
 
     /**

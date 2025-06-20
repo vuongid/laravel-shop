@@ -4,6 +4,7 @@
 
     $items = $params['items'];
     $routeBase = $params['routeBase'];
+    $langPath = $params['langPath'];
     $statuses = GeneralStatus::toArray(true);
 
     $title = $params['title'] ?? '';
@@ -13,26 +14,24 @@
     $createdAt = $params['created_at'] ?? '';
     $updatedAt = $params['updated_at'] ?? '';
 
-    // dd($items);
-
 @endphp
 
 @extends('admin.layouts.main')
 @section('content')
-    <x-page-header title="{{ __('modules/slider.title') }}">
-        <a href="{{ route($routeBase . 'create') }}" class="btn btn-primary">{{ __('modules/slider.button.add_new') }}</a>
+    <x-page-header title="{{ __($langPath . 'title') }}">
+        <a href="{{ route($routeBase . 'create') }}" class="btn btn-primary">{{ __($langPath . 'button.add_new') }}</a>
     </x-page-header>
     @include('admin.partials.notify')
     <div class="container-xl">
         <button class="btn btn-outline-secondary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse"
             aria-expanded="false" aria-controls="searchCollapse">
-            Tìm kiếm nâng cao
+            {{ __($langPath . 'button.filters') }}
         </button>
         <div class="collapse" id="searchCollapse">
             <form action="{{ route($routeBase . 'index') }}">
                 <div class="row mb-4">
                     <div class="col-lg-6">
-                        <x-input label="{{ __('modules/slider.fields.title') }}" type="text" value="{{ $title }}"
+                        <x-input label="{{ __($langPath . 'fields.title') }}" type="text" value="{{ $title }}"
                             name="title" />
                     </div>
                     <div class="col-lg-6">
@@ -42,20 +41,21 @@
                         <x-input label="description" type="text" value="{{ $description }}" name="description" />
                     </div>
                     <div class="col-lg-6">
-                        <x-select label="{{ __('modules/slider.fields.status') }}" name="status" :options="$statuses"
+                        <x-select label="{{ __($langPath . 'fields.status') }}" name="status" :options="$statuses"
                             value="{{ $status }}" />
                     </div>
                     <div class="col-lg-6">
-                        <x-input label="Ngày bắt đầu" type="datetime-local" value="{{ $createdAt }}"
-                            name="created_at" />
+                        <x-input label="{{ __($langPath . 'table.startDate') }}" type="datetime-local"
+                            value="{{ $createdAt }}" name="created_at" />
                     </div>
                     <div class="col-lg-6">
-                        <x-input label="Ngày kết thúc" type="datetime-local" value="{{ $createdAt }}"
-                            name="updated_at" />
+                        <x-input label="{{ __($langPath . 'table.endDate') }}" type="datetime-local"
+                            value="{{ $createdAt }}" name="updated_at" />
                     </div>
                     <div class="col-lg-12">
-                        <input type="submit" class="btn btn-primary" value="Tìm kiếm">
-                        <a href="{{ route($routeBase . 'index') }}" class="btn btn-primary">Rest</a>
+                        <input type="submit" class="btn btn-primary" value="{{ __($langPath . 'button.find') }}">
+                        <a href="{{ route($routeBase . 'index') }}"
+                            class="btn btn-primary">{{ __($langPath . 'button.rest') }}</a>
                     </div>
                 </div>
             </form>
@@ -69,10 +69,10 @@
                         <table class="table table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th>{{ __('modules/slider.fields.image') }}</th>
-                                    <th>Thông tin</th>
-                                    <th>{{ __('modules/slider.fields.status') }}</th>
-                                    <th>{{ __('modules/slider.action') }}</th>
+                                    <th>{{ __($langPath . 'fields.image') }}</th>
+                                    <th>{{ __($langPath . 'table.info') }}</th>
+                                    <th>{{ __($langPath . 'fields.status') }}</th>
+                                    <th>{{ __($langPath . 'action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,13 +89,13 @@
                                     @endphp
                                     <tr>
                                         <td width="10%">
-                                            <img src="{{ $item->getFirstMediaUrl('articles') }}"
+                                            <img src="{{ $item->getFirstMediaUrl($params['table']) }}"
                                                 alt="{{ $item->name }}">
                                         </td>
                                         <td class="text-secondary">
-                                            <p>{{ __('modules/slider.fields.title') }} : {{ $item->title }}</p>
-                                            <p>Miêu tả : {{ $item->description }}</p>
-                                            <p>Slug : {{ $item->slug }}</p>
+                                            <p>{{ __($langPath . 'fields.title') }} : {{ $item->title }}</p>
+                                            <p>{{ __($langPath . 'fields.description') }} : {{ $item->description }}</p>
+                                            <p>{{ __($langPath . 'fields.slug') }} : {{ $item->slug }}</p>
                                         </td>
                                         <td>
                                             <a href="{{ route($routeBase . 'status', ['status' => $item->status, 'id' => $item->id]) }}"
@@ -104,15 +104,15 @@
                                         </td>
                                         <td>
                                             <a href="{{ route($routeBase . 'show', $item) }}"
-                                                class="btn btn-indigo">{{ __('modules/slider.button.detail') }}</a>
+                                                class="btn btn-indigo">{{ __($langPath . 'button.detail') }}</a>
                                             <a href="{{ route($routeBase . 'edit', $item) }}"
-                                                class="btn btn-info">{{ __('modules/slider.button.edit') }}</a>
+                                                class="btn btn-info">{{ __($langPath . 'button.edit') }}</a>
                                             <form action="{{ route($routeBase . 'destroy', $item) }}" method="POST"
                                                 class="d-inline-block">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="btn btn-danger">{{ __('modules/slider.button.delete') }}</button>
+                                                    class="btn btn-danger">{{ __($langPath . 'button.delete') }}</button>
                                             </form>
                                         </td>
                                     </tr>
