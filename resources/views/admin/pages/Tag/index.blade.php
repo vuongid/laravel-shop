@@ -7,7 +7,7 @@
     $langPath = $params['langPath'];
     $statuses = GeneralStatus::toArray(true);
 
-    $title = $params['title'] ?? '';
+    $name = $params['name'] ?? '';
     $slug = $params['slug'] ?? '';
     $status = $params['status'] ?? '';
     $description = $params['description'] ?? '';
@@ -31,18 +31,11 @@
             <form action="{{ route($routeBase . 'index') }}">
                 <div class="row mb-4">
                     <div class="col-lg-6">
-                        <x-input label="{{ __($langPath . 'fields.title') }}" type="text" value="{{ $title }}"
+                        <x-input label="{{ __($langPath . 'fields.name') }}" type="text" value="{{ $name }}"
                             name="title" />
                     </div>
                     <div class="col-lg-6">
                         <x-input label="slug" type="text" value="{{ $slug }}" name="slug" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-input label="description" type="text" value="{{ $description }}" name="description" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-select label="{{ __($langPath . 'fields.status') }}" name="status" :options="$statuses"
-                            value="{{ $status }}" />
                     </div>
                     <div class="col-lg-6">
                         <x-input label="{{ __($langPath . 'table.startDate') }}" type="datetime-local"
@@ -51,6 +44,10 @@
                     <div class="col-lg-6">
                         <x-input label="{{ __($langPath . 'table.endDate') }}" type="datetime-local"
                             value="{{ $createdAt }}" name="updated_at" />
+                    </div>
+                    <div class="col-lg-6">
+                        <x-select label="{{ __($langPath . 'fields.status') }}" name="status" :options="$statuses"
+                            value="{{ $status }}" />
                     </div>
                     <div class="col-lg-12">
                         <input type="submit" class="btn btn-primary" value="{{ __($langPath . 'button.find') }}">
@@ -89,9 +86,10 @@
                                     @endphp
                                     <tr>
                                         <td class="text-secondary">
-                                            <p>{{ __($langPath . 'fields.title') }} : {{ $item->title }}</p>
-                                            <p>{{ __($langPath . 'fields.description') }} : {{ $item->description }}</p>
-                                            <p>{{ __($langPath . 'fields.slug') }} : {{ $item->slug }}</p>
+                                            <p>{{ $item->name }}</p>
+                                        </td>
+                                        <td class="text-secondary">
+                                            <p>{{ $item->slug }}</p>
                                         </td>
                                         <td>
                                             <a href="{{ route($routeBase . 'status', ['status' => $item->status, 'id' => $item->id]) }}"
