@@ -15,29 +15,26 @@ return [
     // Tên các field
     'fields' => [
         'id'          => 'ID',
-        'title'       => 'Tiêu đề',
-        'description' => 'Miêu tả',
-        'content'     => 'Nội dung',
+        'name'        => 'Tên',
         'slug'        => 'Slug',
         'status'      => 'Trạng thái',
-        'image'       => 'Ảnh',
         'created_at'  => 'Thời điểm tạo',
         'updated_at'  => 'Thời điểm cập nhật',
     ],
 
     // Tên các action
     'actions' => [
-        'index' => 'Danh sách Article',
-        'create' => 'Thêm mới Article',
-        'edit' => 'Cập nhật Article: :name',
-        'show' => 'Chi tiết Article',
+        'index' => 'Danh sách Tag',
+        'create' => 'Thêm mới Tag',
+        'edit' => 'Cập nhật Tag: :name',
+        'show' => 'Chi tiết Tag',
     ],
 
     // Các thông báo
     'messages' => [
-        'created' => 'Article đã được tạo thành công!',
-        'updated' => 'Article đã được cập nhật thành công!',
-        'deleted' => 'Article đã được xóa thành công!',
+        'created' => 'Tag đã được tạo thành công!',
+        'updated' => 'Tag đã được cập nhật thành công!',
+        'deleted' => 'Tag đã được xóa thành công!',
     ],
 
     'button' => [

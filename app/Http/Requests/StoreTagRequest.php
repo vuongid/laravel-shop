@@ -25,7 +25,6 @@ class StoreTagRequest  extends FormRequest
             'name' => 'required|between:5,255',
             'slug'  => 'nullable|unique:article_categories,slug|regex:/^[a-zA-Z0-9-]+$/',
             'status' => 'required',
-            'parent_id' => 'required',
         ];
     }
 

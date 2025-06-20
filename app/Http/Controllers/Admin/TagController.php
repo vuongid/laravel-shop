@@ -51,7 +51,6 @@ class TagController extends Controller
      */
     public function create()
     {
-        $this->params['articleCategories'] = $this->model->listItems($this->params, ['task' => 'list-items-article-category']);
 
         return view($this->viewAction, [
             'params' => $this->params,
@@ -64,7 +63,6 @@ class TagController extends Controller
     public function store(StoreTagRequest $request)
     {
         $item = $this->model->saveItem($this->params, ['task' => 'create-item']);
-        $item->uploadImage($request->file('image'));
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Thêm dữ liệu thành công!');
     }
 

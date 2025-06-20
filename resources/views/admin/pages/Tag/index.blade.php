@@ -69,8 +69,8 @@
                         <table class="table table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th>{{ __($langPath . 'fields.image') }}</th>
-                                    <th>{{ __($langPath . 'table.info') }}</th>
+                                    <th>{{ __($langPath . 'fields.name') }}</th>
+                                    <th>{{ __($langPath . 'fields.slug') }}</th>
                                     <th>{{ __($langPath . 'fields.status') }}</th>
                                     <th>{{ __($langPath . 'action') }}</th>
                                 </tr>
@@ -88,10 +88,6 @@
                                         );
                                     @endphp
                                     <tr>
-                                        <td width="10%">
-                                            <img src="{{ $item->getFirstMediaUrl($params['table']) }}"
-                                                alt="{{ $item->name }}">
-                                        </td>
                                         <td class="text-secondary">
                                             <p>{{ __($langPath . 'fields.title') }} : {{ $item->title }}</p>
                                             <p>{{ __($langPath . 'fields.description') }} : {{ $item->description }}</p>

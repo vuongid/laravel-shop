@@ -5,7 +5,6 @@
 
     $routeBase = $params['routeBase'];
     $statuses = GeneralStatus::toArray();
-    $articleCategories = $params['articleCategories'];
     $langPath = $params['langPath'];
 
 @endphp
@@ -23,14 +22,9 @@
                         <h4 class="card-title">Form</h4>
                     </div>
                     <div class="card-body">
-                        <x-input label="{{ __($langPath . 'fields.title') }}" name="title" type="text" />
-                        <x-select label="{{ __($langPath . 'fields.status') }}" :options="$articleCategories" name="category_id" />
-                        <x-input label="{{ __($langPath . 'fields.description') }}" name="description" type="text" />
+                        <x-input label="{{ __($langPath . 'fields.name') }}" name="name" type="text" />
                         <x-input label="{{ __($langPath . 'fields.slug') }}" name="slug" type="text" />
                         <x-select label="{{ __($langPath . 'fields.status') }}" :options="$statuses" name="status" />
-                        <x-input label="{{ __($langPath . 'fields.image') }}" type="file" class="filepond-image"
-                            name="image" />
-                        <textarea id="tinymce" name="content"></textarea>
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit" class="btn btn-primary ms-auto">{{ __($langPath . 'button.add') }}</button>

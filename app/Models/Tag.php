@@ -4,13 +4,10 @@ namespace App\Models;
 
 use App\Enums\GeneralStatus;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Support\Str;
 
-class Tag extends Model implements HasMedia
+class Tag extends Model
 {
-    use InteractsWithMedia;
     protected $table = 'tags';
     protected $fillable = ['name', 'slug'];
     protected function casts(): array
@@ -18,14 +15,6 @@ class Tag extends Model implements HasMedia
         return [
             'status' => GeneralStatus::class,
         ];
-    }
-
-    public function registerMediaCollections(): void
-    {
-        $this
-            ->addMediaCollection($this->table)
-            ->singleFile()
-            ->useFallbackUrl(asset('media/default.png'));
     }
 
     public function scopeActive($query)
@@ -40,16 +29,11 @@ class Tag extends Model implements HasMedia
 
     public function listItems($params = null, $options = null)
     {
-        $result = null;
-
         if ($options['task'] == 'list-items') {
-            $query = self::select('id', 'title', 'description', 'slug', 'status', 'created_at', 'updated_at');
+            $query = self::select('id', 'name', 'slug', 'status', 'created_at', 'updated_at');
 
-            if (!empty($params['title'])) {
-                $query->where('title', 'LIKE', "%{$params['title']}%");
-            }
-            if (!empty($params['description'])) {
-                $query->where('description', 'LIKE', "%{$params['description']}%");
+            if (!empty($params['name'])) {
+                $query->where('name', 'LIKE', "%{$params['title']}%");
             }
             if (!empty($params['slug'])) {
                 $query->where('slug', 'LIKE', "%{$params['slug']}%");
@@ -64,14 +48,12 @@ class Tag extends Model implements HasMedia
                 $query->where('status', "{$params['status']}");
             }
 
-            $result = $query->orderBy('id', 'desc')->paginate($params['pagination']['totalItemsPerPage']);
+            return $query->orderBy('id', 'desc')->paginate($params['pagination']['totalItemsPerPage']);
         }
 
         if ($options['task'] == 'list-items-article-category') {
             return ArticleCategory::pluck('name', 'id')->toArray();
         }
-
-        return $result;
     }
 
     public function saveItem($params = null, $options = null)
@@ -83,7 +65,7 @@ class Tag extends Model implements HasMedia
         }
         if ($options['task'] == 'create-item') {
             if (empty($params['slug'])) {
-                $params['slug'] = $this->generateUniqueSlug($params['title']);
+                $params['slug'] = $this->generateUniqueSlug($params['name']);
             }
             return $item = self::create($params);
         }
@@ -102,16 +84,6 @@ class Tag extends Model implements HasMedia
             $item = $params['item'];
             $item->delete();
         }
-    }
-
-    public function uploadImage($file)
-    {
-        $ext = $file->getClientOriginalExtension();
-        $randomName = Str::random(10) . '.' . $ext;
-
-        $this->addMedia($file)
-            ->usingFileName($randomName)
-            ->toMediaCollection($this->getTable());
     }
 
     private function generateUniqueSlug($name, $excludeId = null)
