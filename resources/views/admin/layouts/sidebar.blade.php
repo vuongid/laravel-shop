@@ -38,6 +38,11 @@
                          <span class="nav-link-title">Article</span>
                      </a>
                  </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.tag.index') }}">
+                         <span class="nav-link-title">Tag</span>
+                     </a>
+                 </li>
              </ul>
              <!-- END NAVBAR MENU -->
          </div>

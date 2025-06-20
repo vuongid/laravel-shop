@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ArticleCategoryController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\TagController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -42,4 +43,9 @@ Route::group([
     Route::resource('article', ArticleController::class);
     Route::get('article/change-status-{status}/{id}', [ArticleController::class, 'status'])
         ->name('article.status');
+
+    // ================= TAG =================
+    Route::resource('tag', TagController::class);
+    Route::get('tag/change-status-{status}/{id}', [TagController::class, 'status'])
+        ->name('tag.status');
 });
