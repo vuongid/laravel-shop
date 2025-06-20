@@ -6,14 +6,9 @@
     $item = $params['item'];
     $routeBase = $params['routeBase'];
     $categories = $params['categories'];
-
+    $langPath = $params['langPath'];
     $statuses = GeneralStatus::toArray();
 
-    $elements = [
-        Form::input('text', 'name', 'name', ['value' => $item->name]),
-        Form::select('status', $statuses, $item->status->value, __('modules/slider.fields.status')),
-        Form::select('parent_id', $categories, $item->parent_id, __('modules/slider.fields.status')),
-    ];
 @endphp
 @extends('admin.layouts.main')
 @section('content')
@@ -22,13 +17,13 @@
             <div class="row g-2 align-items-center">
                 <div class="col">
                     <!-- Page pre-title -->
-                    <h2 class="page-title">{{ __('modules/slider.actions.edit', ['name' => $item->title]) }}</h2>
+                    <h2 class="page-title">{{ __($langPath . 'actions.edit', ['name' => $item->title]) }}</h2>
                 </div>
                 <!-- Page title actions -->
                 <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
                         <a href="{{ route($routeBase . 'index') }}"
-                            class="btn btn-primary">{{ __('modules/slider.button.back') }}</a>
+                            class="btn btn-primary">{{ __($langPath . 'button.back') }}</a>
                     </div>
                 </div>
             </div>
@@ -45,17 +40,17 @@
                         <h4 class="card-title">Form</h4>
                     </div>
                     <div class="card-body">
-                        <x-input label="{{ __('modules/slider.fields.title') }}" name="name" type="text"
+                        <x-input label="{{ __($langPath . 'fields.name') }}" name="name" type="text"
                             value="{{ $item->name }}" />
                         <x-input label="slug" name="slug" type="text" value="{{ $item->slug }}" />
-                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status"
+                        <x-select label="{{ __($langPath . 'fields.status') }}" :options="$statuses" name="status"
                             value="{{ $item->status->value }}" />
-                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$categories" name="parent_id"
+                        <x-select label="{{ __($langPath . 'fields.parent_id') }}" :options="$categories" name="parent_id"
                             value="{{ $item->parent_id }}" />
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"
-                            class="btn btn-primary ms-auto">{{ __('modules/slider.button.update') }}</button>
+                            class="btn btn-primary ms-auto">{{ __($langPath . 'button.update') }}</button>
                     </div>
                 </form>
             </div>

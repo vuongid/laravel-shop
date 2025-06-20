@@ -6,12 +6,13 @@
     $routeBase = $params['routeBase'];
     $categories = $params['categories'];
     $statuses = GeneralStatus::toArray();
+    $langPath = $params['langPath'];
 
 @endphp
 @extends('admin.layouts.main')
 @section('content')
-    <x-page-header title="{{ __('modules/slider.actions.create') }}">
-        <a href="{{ route($routeBase . 'index') }}" class="btn btn-primary">{{ __('modules/slider.button.back') }}</a>
+    <x-page-header title="{{ __($langPath . 'actions.create') }}">
+        <a href="{{ route($routeBase . 'index') }}" class="btn btn-primary">{{ __($langPath . 'button.back') }}</a>
     </x-page-header>
     <div class="container-xl">
         <div class="row row-cards">
@@ -22,14 +23,13 @@
                         <h4 class="card-title">Form</h4>
                     </div>
                     <div class="card-body">
-                        <x-input label="{{ __('modules/slider.fields.title') }}" name="name" type="text" />
+                        <x-input label="{{ __($langPath . 'fields.name') }}" name="name" type="text" />
                         <x-input label="slug" name="slug" type="text" />
-                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status" />
-                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$categories" name="parent_id" />
+                        <x-select label="{{ __($langPath . 'fields.status') }}" :options="$statuses" name="status" />
+                        <x-select label="{{ __($langPath . 'fields.parent_id') }}" :options="$categories" name="parent_id" />
                     </div>
                     <div class="card-footer text-end">
-                        <button type="submit"
-                            class="btn btn-primary ms-auto">{{ __('modules/slider.button.add') }}</button>
+                        <button type="submit" class="btn btn-primary ms-auto">{{ __($langPath . 'button.add') }}</button>
                     </div>
                 </form>
             </div>

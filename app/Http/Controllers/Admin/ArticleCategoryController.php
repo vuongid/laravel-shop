@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleCategoryRequest;
 use App\Http\Requests\UpdateArticleCategoryRequest;
 use App\Models\ArticleCategory;
-use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class ArticleCategoryController extends Controller
@@ -29,6 +28,7 @@ class ArticleCategoryController extends Controller
         $this->params['action'] = $action;
         $this->params['routeBase'] = "$module.$controller.";
         $this->viewAction =  "$module.pages.$controller.$action";
+        $this->params['langPath'] = 'modules/articleCategory.';
     }
 
     /**
@@ -67,9 +67,9 @@ class ArticleCategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Slider $slider)
+    public function show(ArticleCategory $articleCategory)
     {
-        $this->params['item'] = $slider;
+        $this->params['item'] = $articleCategory;
 
         return view($this->viewAction, [
             'params' => $this->params,
