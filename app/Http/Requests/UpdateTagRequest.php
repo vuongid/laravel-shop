@@ -31,7 +31,6 @@ class UpdateTagRequest  extends FormRequest
 
             ],
             'status' => 'required',
-            'parent_id' => 'required',
         ];
     }
 

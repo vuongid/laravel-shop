@@ -6,7 +6,6 @@
     $item = $params['item'];
     $routeBase = $params['routeBase'];
     $statuses = GeneralStatus::toArray();
-    $articleCategories = $params['articleCategories'];
     $langPath = $params['langPath'];
 
 @endphp
@@ -40,19 +39,12 @@
                         <h4 class="card-title">Form</h4>
                     </div>
                     <div class="card-body">
-                        <x-input label="{{ __($langPath . 'fields.title') }}" name="title" type="text"
-                            value="{{ $item->title }}" />
-                        <x-select label="{{ __($langPath . 'fields.status') }}" :options="$articleCategories" name="category_id"
-                            value="{{ $item->category_id }}" />
-                        <x-input label="{{ __($langPath . 'fields.description') }}" name="description" type="text"
-                            value="{{ $item->description }}" />
+                        <x-input label="{{ __($langPath . 'fields.name') }}" name="name" type="text"
+                            value="{{ $item->name }}" />
                         <x-input label="{{ __($langPath . 'fields.slug') }}" name="slug" type="text"
                             value="{{ $item->slug }}" />
                         <x-select label="{{ __($langPath . 'fields.status') }}" :options="$statuses" name="status"
                             value="{{ $item->status->value }}" />
-                        <x-input label="{{ __($langPath . 'fields.image') }}" type="file" class="filepond-image"
-                            name="image" data-url="s" data-image="{{ $item->getFirstMediaUrl('articles') }}" />
-                        <textarea id="tinymce" name="content">{{ $item->content }}</textarea>
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"

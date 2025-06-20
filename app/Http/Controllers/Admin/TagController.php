@@ -84,7 +84,6 @@ class TagController extends Controller
     public function edit(Tag $tag)
     {
         $this->params['item'] = $tag;
-        $this->params['articleCategories'] = $this->model->listItems($this->params, ['task' => 'list-items-article-category']);
 
         return view($this->viewAction, [
             'params' => $this->params,
@@ -96,10 +95,8 @@ class TagController extends Controller
      */
     public function update(UpdateTagRequest $request, Tag $tag)
     {
-        $item = $this->model->saveItem(['item' => $tag] + $this->params, ['task' => 'edit-item']);
-        if ($request->has('image')) {
-            $item->uploadImage($request->file('image'));
-        }
+        $this->model->saveItem(['item' => $tag] + $this->params, ['task' => 'edit-item']);
+
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
     }
 

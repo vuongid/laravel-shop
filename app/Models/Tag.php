@@ -67,22 +67,21 @@ class Tag extends Model
             if (empty($params['slug'])) {
                 $params['slug'] = $this->generateUniqueSlug($params['name']);
             }
-            return $item = self::create($params);
+            return self::create($params);
         }
 
         if ($options['task'] == 'edit-item') {
-            $item = self::find($params['item']->id);
-            $item->update($params);
-
-            return $item;
+            if (empty($params['slug'])) {
+                $params['slug'] = $this->generateUniqueSlug($params['name']);
+            }
+            return $params['item']->update($params);
         }
     }
 
     public function deleteItem($params = null, $options = null)
     {
         if ($options['task'] == 'delete-item') {
-            $item = $params['item'];
-            $item->delete();
+            $params['item']->delete();
         }
     }
 
