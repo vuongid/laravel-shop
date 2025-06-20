@@ -6,12 +6,13 @@
     $routeBase = $params['routeBase'];
     $statuses = GeneralStatus::toArray();
     $articleCategories = $params['articleCategories'];
+    $langPath = $params['langPath'];
 
 @endphp
 @extends('admin.layouts.main')
 @section('content')
-    <x-page-header title="{{ __('modules/slider.actions.create') }}">
-        <a href="{{ route($routeBase . 'index') }}" class="btn btn-primary">{{ __('modules/slider.button.back') }}</a>
+    <x-page-header title="{{ __($langPath . 'actions.create') }}">
+        <a href="{{ route($routeBase . 'index') }}" class="btn btn-primary">{{ __($langPath . 'button.back') }}</a>
     </x-page-header>
     <div class="container-xl">
         <div class="row row-cards">
@@ -22,17 +23,17 @@
                         <h4 class="card-title">Form</h4>
                     </div>
                     <div class="card-body">
-                        <x-input label="{{ __('modules/slider.fields.title') }}" name="title" type="text" />
-                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$articleCategories" name="category_id" />
-                        <x-input label="description" name="description" type="text" />
-                        <x-input label="slug" name="slug" type="text" />
-                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status" />
-                        <x-input type="file" class="filepond-image" name="image" />
+                        <x-input label="{{ __($langPath . 'fields.title') }}" name="title" type="text" />
+                        <x-select label="{{ __($langPath . 'fields.status') }}" :options="$articleCategories" name="category_id" />
+                        <x-input label="{{ __($langPath . 'fields.description') }}" name="description" type="text" />
+                        <x-input label="{{ __($langPath . 'fields.slug') }}" name="slug" type="text" />
+                        <x-select label="{{ __($langPath . 'fields.status') }}" :options="$statuses" name="status" />
+                        <x-input label="{{ __($langPath . 'fields.image') }}" type="file" class="filepond-image"
+                            name="image" />
                         <textarea id="tinymce" name="content"></textarea>
                     </div>
                     <div class="card-footer text-end">
-                        <button type="submit"
-                            class="btn btn-primary ms-auto">{{ __('modules/slider.button.add') }}</button>
+                        <button type="submit" class="btn btn-primary ms-auto">{{ __($langPath . 'button.add') }}</button>
                     </div>
                 </form>
             </div>

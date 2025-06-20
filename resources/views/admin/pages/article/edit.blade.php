@@ -7,6 +7,7 @@
     $routeBase = $params['routeBase'];
     $statuses = GeneralStatus::toArray();
     $articleCategories = $params['articleCategories'];
+    $langPath = $params['langPath'];
 
 @endphp
 @extends('admin.layouts.main')
@@ -16,13 +17,13 @@
             <div class="row g-2 align-items-center">
                 <div class="col">
                     <!-- Page pre-title -->
-                    <h2 class="page-title">{{ __('modules/slider.actions.edit', ['name' => $item->title]) }}</h2>
+                    <h2 class="page-title">{{ __($langPath . 'actions.edit', ['name' => $item->title]) }}</h2>
                 </div>
                 <!-- Page title actions -->
                 <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
                         <a href="{{ route($routeBase . 'index') }}"
-                            class="btn btn-primary">{{ __('modules/slider.button.back') }}</a>
+                            class="btn btn-primary">{{ __($langPath . 'button.back') }}</a>
                     </div>
                 </div>
             </div>
@@ -39,21 +40,23 @@
                         <h4 class="card-title">Form</h4>
                     </div>
                     <div class="card-body">
-                        <x-input label="{{ __('modules/slider.fields.title') }}" name="title" type="text"
+                        <x-input label="{{ __($langPath . 'fields.title') }}" name="title" type="text"
                             value="{{ $item->title }}" />
-                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$articleCategories" name="category_id"
+                        <x-select label="{{ __($langPath . 'fields.status') }}" :options="$articleCategories" name="category_id"
                             value="{{ $item->category_id }}" />
-                        <x-input label="description" name="description" type="text" value="{{ $item->description }}" />
-                        <x-input label="slug" name="slug" type="text" value="{{ $item->slug }}" />
-                        <x-select label="{{ __('modules/slider.fields.status') }}" :options="$statuses" name="status"
+                        <x-input label="{{ __($langPath . 'fields.description') }}" name="description" type="text"
+                            value="{{ $item->description }}" />
+                        <x-input label="{{ __($langPath . 'fields.slug') }}" name="slug" type="text"
+                            value="{{ $item->slug }}" />
+                        <x-select label="{{ __($langPath . 'fields.status') }}" :options="$statuses" name="status"
                             value="{{ $item->status->value }}" />
-                        <x-input type="file" class="filepond-image" name="image" data-url="s"
-                            data-image="{{ $item->getFirstMediaUrl('articles') }}" />
+                        <x-input label="{{ __($langPath . 'fields.image') }}" type="file" class="filepond-image"
+                            name="image" data-url="s" data-image="{{ $item->getFirstMediaUrl('articles') }}" />
                         <textarea id="tinymce" name="content">{{ $item->content }}</textarea>
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"
-                            class="btn btn-primary ms-auto">{{ __('modules/slider.button.update') }}</button>
+                            class="btn btn-primary ms-auto">{{ __($langPath . 'button.update') }}</button>
                     </div>
                 </form>
             </div>
