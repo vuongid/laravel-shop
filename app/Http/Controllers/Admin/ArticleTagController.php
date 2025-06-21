@@ -54,6 +54,8 @@ class ArticleTagController extends Controller
      */
     public function create()
     {
+        $this->params['articles'] = $this->model->listItems($this->params, ['task' => 'list-items-article']);
+        $this->params['tags'] = $this->model->listItems($this->params, ['task' => 'list-items-tag']);
 
         return view($this->viewAction, [
             'params' => $this->params,

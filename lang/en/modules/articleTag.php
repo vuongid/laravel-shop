@@ -16,7 +16,6 @@ return [
     'fields' => [
         'id'          => 'ID',
         'name'        => 'Tên',
-        'slug'        => 'Slug',
         'status'      => 'Trạng thái',
         'created_at'  => 'Thời điểm tạo',
         'updated_at'  => 'Thời điểm cập nhật',
@@ -52,6 +51,8 @@ return [
 
     'table' => [
         'info'      => 'Thông tin',
+        'article'  => 'Bài viết',
+        'tag'      => 'Thẻ',
         'startDate' => 'Ngày bắt đầu',
         'endDate'   => 'Ngày kết thúc',
     ]

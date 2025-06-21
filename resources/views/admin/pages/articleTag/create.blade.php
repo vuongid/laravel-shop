@@ -6,6 +6,8 @@
     $routeBase = $params['routeBase'];
     $statuses = GeneralStatus::toArray();
     $langPath = $params['langPath'];
+    $articles = $params['articles'];
+    $tags = $params['tags'];
 
 @endphp
 @extends('admin.layouts.main')
@@ -22,8 +24,8 @@
                         <h4 class="card-title">Form</h4>
                     </div>
                     <div class="card-body">
-                        <x-input label="{{ __($langPath . 'fields.name') }}" name="name" type="text" />
-                        <x-input label="{{ __($langPath . 'fields.slug') }}" name="slug" type="text" />
+                        <x-select label="{{ __($langPath . 'table.article') }}" :options="$articles" name="article_id" />
+                        <x-select label="{{ __($langPath . 'table.tag') }}" :options="$tags" name="tag_id" />
                         <x-select label="{{ __($langPath . 'fields.status') }}" :options="$statuses" name="status" />
                     </div>
                     <div class="card-footer text-end">

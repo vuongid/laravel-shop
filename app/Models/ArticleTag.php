@@ -51,8 +51,12 @@ class ArticleTag extends Model
             return $query->orderBy('id', 'desc')->paginate($params['pagination']['totalItemsPerPage']);
         }
 
-        if ($options['task'] == 'list-items-article-category') {
-            return ArticleCategory::pluck('name', 'id')->toArray();
+        if ($options['task'] == 'list-items-article') {
+            return Article::pluck('title', 'id')->toArray();
+        }
+
+        if ($options['task'] == 'list-items-tag') {
+            return Tag::pluck('name', 'id')->toArray();
         }
     }
 
@@ -64,9 +68,6 @@ class ArticleTag extends Model
             self::where('id', $params['id'])->update(['status' => $status]);
         }
         if ($options['task'] == 'create-item') {
-            if (empty($params['slug'])) {
-                $params['slug'] = $this->generateUniqueSlug($params['name']);
-            }
             return self::create($params);
         }
 

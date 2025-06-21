@@ -22,8 +22,8 @@ class StoreArticleTagRequest  extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|between:5,255',
-            'slug'  => 'nullable|unique:article_categories,slug|regex:/^[a-zA-Z0-9-]+$/',
+            'tag_id' => 'required',
+            'article_id'  => 'required',
             'status' => 'required',
         ];
     }
