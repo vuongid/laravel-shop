@@ -26,7 +26,8 @@ class StoreArticleRequest  extends FormRequest
             'category_id' => 'required',
             'slug'  => 'nullable|unique:article_categories,slug|regex:/^[a-zA-Z0-9-]+$/',
             'status' => 'required',
-            'image'  => 'bail|required|image',
+            'image'  => 'bail|nullable|image',
+            'tags'   => 'nullable',
         ];
     }
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ArticleCategoryController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\ArticleTagController;
+use App\Http\Controllers\Admin\SlugController;
 use App\Http\Controllers\Admin\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,6 @@ Route::group([
 
     // ================= TAG =================
     Route::resource('articleTag', ArticleTagController::class);
-    Route::get('articleTag/change-status-{status}/{id}', [ArticleTagController::class, 'status'])
-        ->name('articleTag.status');
+
+    Route::get('/slug/generate', [SlugController::class, 'generate'])->name('slug.generate');
 });

@@ -23,7 +23,7 @@
     <div class="container-xl">
         <button class="btn btn-outline-secondary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse"
             aria-expanded="false" aria-controls="searchCollapse">
-            Tìm kiếm nâng cao
+            {{ __($langPath . 'button.filters') }}
         </button>
         <div class="collapse" id="searchCollapse">
             <form action="{{ route($routeBase . 'index') }}">

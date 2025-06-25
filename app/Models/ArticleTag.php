@@ -29,27 +29,40 @@ class ArticleTag extends Model
 
     public function listItems($params = null, $options = null)
     {
-        if ($options['task'] == 'list-items') {
-            $query = self::select('id', 'name', 'slug', 'status', 'created_at', 'updated_at');
+        if (($options['task'] ?? '') === 'list-items') {
+            $query = self::join('articles', 'article_tag.article_id', '=', 'articles.id')
+                ->join('tags', 'article_tag.tag_id', '=', 'tags.id')
+                ->select([
+                    'article_tag.article_id',
+                    'article_tag.tag_id',
+                    'articles.title as article_title',
+                    'tags.name as tag_name',
+                    'article_tag.status',
+                    'article_tag.id',
+                ]);
 
-            if (!empty($params['name'])) {
-                $query->where('name', 'LIKE', "%{$params['title']}%");
-            }
-            if (!empty($params['slug'])) {
-                $query->where('slug', 'LIKE', "%{$params['slug']}%");
-            }
-            if (!empty($params['created_at'])) {
-                $query->where('created_at', '>=', "{$params['created_at']}");
-            }
-            if (!empty($params['updated_at'])) {
-                $query->where('updated_at', '<=', "{$params['updated_at']}");
-            }
-            if (!empty($params['status']) && ($params['status'] == GeneralStatus::ACTIVE->value || $params['status'] == GeneralStatus::INACTIVE->value)) {
-                $query->where('status', "{$params['status']}");
-            }
+            // if (!empty($params['title'])) {
+            //     $query->where('title', 'LIKE', "%{$params['title']}%");
+            // }
+            // if (!empty($params['description'])) {
+            //     $query->where('description', 'LIKE', "%{$params['description']}%");
+            // }
+            // if (!empty($params['slug'])) {
+            //     $query->where('slug', 'LIKE', "%{$params['slug']}%");
+            // }
+            // if (!empty($params['created_at'])) {
+            //     $query->where('created_at', '>=', "{$params['created_at']}");
+            // }
+            // if (!empty($params['updated_at'])) {
+            //     $query->where('updated_at', '<=', "{$params['updated_at']}");
+            // }
+            // if (!empty($params['status']) && ($params['status'] == GeneralStatus::ACTIVE->value || $params['status'] == GeneralStatus::INACTIVE->value)) {
+            //     $query->where('status', "{$params['status']}");
+            // }
 
-            return $query->orderBy('id', 'desc')->paginate($params['pagination']['totalItemsPerPage']);
+            return $query->orderBy('article_tag.article_id', 'desc')->paginate($params['pagination']['totalItemsPerPage']);
         }
+
 
         if ($options['task'] == 'list-items-article') {
             return Article::pluck('title', 'id')->toArray();
@@ -72,9 +85,7 @@ class ArticleTag extends Model
         }
 
         if ($options['task'] == 'edit-item') {
-            if (empty($params['slug'])) {
-                $params['slug'] = $this->generateUniqueSlug($params['name']);
-            }
+
             return $params['item']->update($params);
         }
     }

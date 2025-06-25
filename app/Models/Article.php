@@ -71,6 +71,18 @@ class Article extends Model implements HasMedia
             return ArticleCategory::pluck('name', 'id')->toArray();
         }
 
+        if ($options['task'] == 'list-items-tag') {
+            return Tag::pluck('name', 'id')->toArray();
+        }
+
+        if ($options['task'] == 'list-article-tag-ids') {
+            return ArticleTag::where('article_id', $params['item']->id)
+                ->pluck('tag_id')
+                ->toArray();
+        }
+
+
+
         return $result;
     }
 
@@ -82,17 +94,27 @@ class Article extends Model implements HasMedia
             self::where('id', $params['id'])->update(['status' => $status]);
         }
         if ($options['task'] == 'create-item') {
-            if (empty($params['slug'])) {
-                $params['slug'] = $this->generateUniqueSlug($params['title']);
-            }
+            $params['slug'] = $this->generateUniqueSlug($params['slug']);
+
             return $item = self::create($params);
         }
 
         if ($options['task'] == 'edit-item') {
             $item = self::find($params['item']->id);
+            $params['slug'] = $this->generateUniqueSlug($params['slug'], $params['item']->id);
             $item->update($params);
 
             return $item;
+        }
+
+        if ($options['task'] == 'create-article-tag') {
+            foreach ($params['tags'] as $tag) {
+                ArticleTag::create([
+                    'article_id' => $params['item']->id,
+                    'tag_id' => $tag,
+                ]);
+            }
+            return;
         }
     }
 
@@ -101,6 +123,10 @@ class Article extends Model implements HasMedia
         if ($options['task'] == 'delete-item') {
             $item = $params['item'];
             $item->delete();
+        }
+
+        if ($options['task'] == 'delete-tags-of-article') {
+            ArticleTag::where('article_id', $params['item']->id)->delete();
         }
     }
 
@@ -114,26 +140,26 @@ class Article extends Model implements HasMedia
             ->toMediaCollection($this->getTable());
     }
 
-    private function generateUniqueSlug($name, $excludeId = null)
+    private function generateUniqueSlug($slug, $excludeId = null)
     {
-        $slug = Str::slug($name);
-        $originalSlug = $slug;
+        $originalSlug = Str::slug($slug);
+        $slug = $originalSlug;
         $counter = 1;
 
-        $query = self::where('slug', $slug);
-        if ($excludeId) {
-            $query->where('id', '!=', $excludeId);
-        }
-
-        while ($query->exists()) {
-            $slug = $originalSlug . '-' . $counter;
-            $counter++;
-
+        do {
             $query = self::where('slug', $slug);
+
             if ($excludeId) {
                 $query->where('id', '!=', $excludeId);
             }
-        }
+
+            $exists = $query->exists();
+
+            if ($exists) {
+                $slug = $originalSlug . '-' . $counter;
+                $counter++;
+            }
+        } while ($exists);
 
         return $slug;
     }

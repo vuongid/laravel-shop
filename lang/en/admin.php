@@ -48,4 +48,17 @@ return [
         'settings' => 'Cài đặt',
         'users' => 'Người dùng',
     ],
+    'controller' => [
+        'slider' => 'Quản lý Slider',
+        'articleCategory' => 'Danh mục bài viết',
+        'article' => 'Bài viết',
+        'productCategory' => 'Danh mục sản phẩm',
+        'product' => 'Sản phẩm',
+        'settings' => 'Cài đặt',
+        'users' => 'Người dùng',
+    ],
+    'action' => [
+        'index' => 'Danh sách',
+        'create' => 'Tạo mới'
+    ]
 ];

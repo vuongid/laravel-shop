@@ -53,6 +53,7 @@ class ArticleController extends Controller
     public function create()
     {
         $this->params['articleCategories'] = $this->model->listItems($this->params, ['task' => 'list-items-article-category']);
+        $this->params['tags'] = $this->model->listItems($this->params, ['task' => 'list-items-tag']);
 
         return view($this->viewAction, [
             'params' => $this->params,
@@ -65,7 +66,14 @@ class ArticleController extends Controller
     public function store(StoreArticleRequest $request)
     {
         $item = $this->model->saveItem($this->params, ['task' => 'create-item']);
-        $item->uploadImage($request->file('image'));
+        $this->params['item'] = $item;
+        if ($request->hasFile('image')) {
+            $item->uploadImage($request->file('image'));
+        }
+        if ($request->has('tags')) {
+            $this->model->saveItem($this->params, ['task' => 'create-article-tag']);
+        }
+
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Thêm dữ liệu thành công!');
     }
 
@@ -88,6 +96,8 @@ class ArticleController extends Controller
     {
         $this->params['item'] = $article;
         $this->params['articleCategories'] = $this->model->listItems($this->params, ['task' => 'list-items-article-category']);
+        $this->params['tags'] = $this->model->listItems($this->params, ['task' => 'list-items-tag']);
+        $this->params['currentTags'] = $this->model->listItems($this->params, ['task' => 'list-article-tag-ids']);
 
         return view($this->viewAction, [
             'params' => $this->params,
@@ -99,10 +109,17 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        $item = $this->model->saveItem(['item' => $article] + $this->params, ['task' => 'edit-item']);
+        $this->params['item'] = $article;
+        $item = $this->model->saveItem($this->params, ['task' => 'edit-item']);
+        $this->model->deleteItem($this->params, ['task' => 'delete-tags-of-article']);
+        if ($request->has('tags')) {
+            $this->model->saveItem($this->params, ['task' => 'create-article-tag']);
+        }
+
         if ($request->has('image')) {
             $item->uploadImage($request->file('image'));
         }
+
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
     }
 
@@ -111,7 +128,10 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        $this->model->deleteItem(['item' => $article], ['task' => 'delete-item']);
+        $this->params['item'] = $article;
+        $this->model->deleteItem($this->params, ['task' => 'delete-item']);
+        $this->model->deleteItem($this->params, ['task' => 'delete-tags-of-article']);
+
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Xóa dữ liệu thành công!');
     }
 

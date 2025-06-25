@@ -66,8 +66,8 @@
                         <table class="table table-vcenter card-table">
                             <thead>
                                 <tr>
-                                    <th>{{ __($langPath . 'fields.name') }}</th>
-                                    <th>{{ __($langPath . 'fields.slug') }}</th>
+                                    <th>article</th>
+                                    <th>tag</th>
                                     <th>{{ __($langPath . 'fields.status') }}</th>
                                     <th>{{ __($langPath . 'action') }}</th>
                                 </tr>
@@ -86,10 +86,10 @@
                                     @endphp
                                     <tr>
                                         <td class="text-secondary">
-                                            <p>{{ $item->name }}</p>
+                                            <p>{{ $item->article_title }}</p>
                                         </td>
                                         <td class="text-secondary">
-                                            <p>{{ $item->slug }}</p>
+                                            <p>{{ $item->tag_name }}</p>
                                         </td>
                                         <td>
                                             <a href="{{ route($routeBase . 'status', ['status' => $item->status, 'id' => $item->id]) }}"

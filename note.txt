@@ -82,3 +82,12 @@ article_tag
 id          article_id              tag_id
 
 có thể sử dụng thư viện: https://spatie.be/docs/laravel-tags/v4/introduction
+
+
+
+Lịch: https://www.daterangepicker.com/
+User:
+- Trang đăng nhập
+- Trang đăng ký
+- Trang update thông tin
+- Thay đổi mật khẩu
