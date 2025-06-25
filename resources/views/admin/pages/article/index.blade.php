@@ -33,12 +33,12 @@
                             name="keyword" />
                     </div>
                     <div class="col-lg-6">
-                        <x-select label="{{ __($langPath . 'fields.status') }}" name="status" :options="$statuses"
-                            value="{{ $status }}" />
-                    </div>
-                    <div class="col-lg-6">
                         <x-input label="{{ __('admin.filter.createAt') }}" type="text" value="{{ $dateFilter }}"
                             name="datefilter" />
+                    </div>
+                    <div class="col-lg-6">
+                        <x-select label="{{ __($langPath . 'fields.status') }}" name="status" :options="$statuses"
+                            value="{{ $status }}" />
                     </div>
                     <div class="col-lg-12">
                         <input type="submit" class="btn btn-primary" value="{{ __($langPath . 'button.find') }}">
@@ -114,27 +114,3 @@
         {!! $items->appends(request()->input())->links('admin.partials.paginator') !!}
     </div>
 @endsection
-
-@push('script')
-    <script>
-        $(function() {
-
-            $('input[name="datefilter"]').daterangepicker({
-                autoUpdateInput: false,
-                locale: {
-                    cancelLabel: 'Clear'
-                }
-            });
-
-            $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format(
-                    'MM/DD/YYYY'));
-            });
-
-            $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-                $(this).val('');
-            });
-
-        });
-    </script>
-@endpush

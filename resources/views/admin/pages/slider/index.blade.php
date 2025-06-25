@@ -9,8 +9,7 @@
     $title = $params['title'] ?? '';
     $url = $params['url'] ?? '';
     $status = $params['status'] ?? '';
-    $createdAt = $params['created_at'] ?? '';
-    $updatedAt = $params['updated_at'] ?? '';
+    $dateFilter = $params['datefilter'] ?? '';
 
 @endphp
 
@@ -33,15 +32,12 @@
                             name="title" />
                     </div>
                     <div class="col-lg-6">
+                        <x-input label="{{ __('admin.filter.createAt') }}" type="text" value="{{ $dateFilter }}"
+                            name="datefilter" />
+                    </div>
+                    <div class="col-lg-6">
                         <x-input label="{{ __('modules/slider.fields.url') }}" type="text" value="{{ $url }}"
                             name="url" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-input label="Ngày bắt đầu" type="datetime-local" value="{{ $createdAt }}" name="created_at" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-input label="Ngày kết thúc" type="datetime-local" value="{{ $createdAt }}"
-                            name="updated_at" />
                     </div>
                     <div class="col-lg-6">
                         <x-select label="{{ __('modules/slider.fields.status') }}" name="status" :options="$statuses"
@@ -66,23 +62,11 @@
                                     <th>{{ __('modules/slider.fields.image') }}</th>
                                     <th>Thông tin</th>
                                     <th>{{ __('modules/slider.fields.status') }}</th>
-                                    <th>{{ __('modules/slider.fields.created_at') }}</th>
-                                    <th>{{ __('modules/slider.fields.updated_at') }}</th>
                                     <th>{{ __('modules/slider.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($items as $item)
-                                    @php
-                                        $createdAt = date(
-                                            config('shop.format.short_time'),
-                                            strtotime($item->created_at),
-                                        );
-                                        $updateAt = date(
-                                            config('shop.format.short_time'),
-                                            strtotime($item->updated_at),
-                                        );
-                                    @endphp
                                     <tr>
                                         <td width="10%">
                                             <img src="{{ $item->getFirstMediaUrl('sliders') }}" alt="{{ $item->name }}">
@@ -96,8 +80,6 @@
                                                 class="btn btn-round {{ $item->status->color() }}">{{ $item->status->label() }}
                                             </a>
                                         </td>
-                                        <td class="text-secondary">{{ $createdAt }}</td>
-                                        <td class="text-secondary">{{ $updateAt }}</td>
                                         <td>
                                             <a href="{{ route($routeBase . 'show', $item) }}"
                                                 class="btn btn-indigo">{{ __('modules/slider.button.detail') }}</a>
