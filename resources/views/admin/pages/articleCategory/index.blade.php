@@ -9,8 +9,7 @@
 
     $name = $params['name'] ?? '';
     $status = $params['status'] ?? '';
-    $createdAt = $params['created_at'] ?? '';
-    $updatedAt = $params['updated_at'] ?? '';
+    $dateFilter = $params['datefilter'] ?? '';
 
 @endphp
 
@@ -33,16 +32,12 @@
                             name="name" />
                     </div>
                     <div class="col-lg-6">
+                        <x-input label="{{ __('admin.filter.createAt') }}" type="text" value="{{ $dateFilter }}"
+                            name="datefilter" />
+                    </div>
+                    <div class="col-lg-6">
                         <x-select label="{{ __($langPath . 'fields.status') }}" name="status" :options="$statuses"
                             value="{{ $status }}" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-input label="{{ __($langPath . 'table.startDate') }}" type="datetime-local"
-                            value="{{ $createdAt }}" name="created_at" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-input label="{{ __($langPath . 'table.endDate') }}" type="datetime-local"
-                            value="{{ $createdAt }}" name="updated_at" />
                     </div>
                     <div class="col-lg-12">
                         <input type="submit" class="btn btn-primary" value="{{ __($langPath . 'button.find') }}">

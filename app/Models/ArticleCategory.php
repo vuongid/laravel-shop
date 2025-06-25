@@ -44,11 +44,11 @@ class ArticleCategory extends Model
             if (!empty($params['url'])) {
                 $query->where('url', 'LIKE', "%{$params['url']}%");
             }
-            if (!empty($params['created_at'])) {
-                $query->where('created_at', '>=', "{$params['created_at']}");
-            }
-            if (!empty($params['updated_at'])) {
-                $query->where('updated_at', '<=', "{$params['updated_at']}");
+            if (!empty($params['datefilter'])) {
+                $dates = explode(' - ', $params['datefilter']);
+                $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]))->startOfDay();
+                $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->endOfDay();
+                $query->whereBetween('created_at', [$startDate, $endDate]);
             }
             if (!empty($params['status']) && ($params['status'] == GeneralStatus::ACTIVE->value || $params['status'] == GeneralStatus::INACTIVE->value)) {
                 $query->where('status', "{$params['status']}");
