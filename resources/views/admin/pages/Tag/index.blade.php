@@ -9,10 +9,8 @@
 
     $name = $params['name'] ?? '';
     $slug = $params['slug'] ?? '';
-    $status = $params['status'] ?? '';
     $description = $params['description'] ?? '';
-    $createdAt = $params['created_at'] ?? '';
-    $updatedAt = $params['updated_at'] ?? '';
+    $dateFilter = $params['datefilter'] ?? '';
 
 @endphp
 
@@ -32,22 +30,14 @@
                 <div class="row mb-4">
                     <div class="col-lg-6">
                         <x-input label="{{ __($langPath . 'fields.name') }}" type="text" value="{{ $name }}"
-                            name="title" />
+                            name="name" />
+                    </div>
+                    <div class="col-lg-6">
+                        <x-input label="{{ __('admin.filter.createAt') }}" type="text" value="{{ $dateFilter }}"
+                            name="datefilter" />
                     </div>
                     <div class="col-lg-6">
                         <x-input label="slug" type="text" value="{{ $slug }}" name="slug" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-input label="{{ __($langPath . 'table.startDate') }}" type="datetime-local"
-                            value="{{ $createdAt }}" name="created_at" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-input label="{{ __($langPath . 'table.endDate') }}" type="datetime-local"
-                            value="{{ $createdAt }}" name="updated_at" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-select label="{{ __($langPath . 'fields.status') }}" name="status" :options="$statuses"
-                            value="{{ $status }}" />
                     </div>
                     <div class="col-lg-12">
                         <input type="submit" class="btn btn-primary" value="{{ __($langPath . 'button.find') }}">
@@ -68,33 +58,17 @@
                                 <tr>
                                     <th>{{ __($langPath . 'fields.name') }}</th>
                                     <th>{{ __($langPath . 'fields.slug') }}</th>
-                                    <th>{{ __($langPath . 'fields.status') }}</th>
                                     <th>{{ __($langPath . 'action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($items as $item)
-                                    @php
-                                        $createdAt = date(
-                                            config('shop.format.short_time'),
-                                            strtotime($item->created_at),
-                                        );
-                                        $updateAt = date(
-                                            config('shop.format.short_time'),
-                                            strtotime($item->updated_at),
-                                        );
-                                    @endphp
                                     <tr>
                                         <td class="text-secondary">
                                             <p>{{ $item->name }}</p>
                                         </td>
                                         <td class="text-secondary">
                                             <p>{{ $item->slug }}</p>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route($routeBase . 'status', ['status' => $item->status, 'id' => $item->id]) }}"
-                                                class="btn btn-round {{ $item->status->color() }}">{{ $item->status->label() }}
-                                            </a>
                                         </td>
                                         <td>
                                             <a href="{{ route($routeBase . 'show', $item) }}"
