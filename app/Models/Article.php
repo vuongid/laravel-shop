@@ -45,14 +45,20 @@ class Article extends Model implements HasMedia
         if ($options['task'] == 'list-items') {
             $query = self::select('id', 'title', 'description', 'slug', 'status', 'created_at', 'updated_at');
 
-            if (!empty($params['title'])) {
-                $query->where('title', 'LIKE', "%{$params['title']}%");
-            }
-            if (!empty($params['description'])) {
-                $query->where('description', 'LIKE', "%{$params['description']}%");
+            if (!empty($params['keyword'])) {
+                $query->where(function ($q) use ($params) {
+                    $q->where('title', 'LIKE', '%' . $params['keyword'] . '%')
+                        ->orWhere('description', 'LIKE', '%' . $params['keyword'] . '%');
+                });
             }
             if (!empty($params['slug'])) {
                 $query->where('slug', 'LIKE', "%{$params['slug']}%");
+            }
+            if (!empty($params['datefilter'])) {
+                $dates = explode(' - ', $params['datefilter']);
+                $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]))->startOfDay();
+                $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->endOfDay();
+                $query->whereBetween('created_at', [$startDate, $endDate]);
             }
             if (!empty($params['created_at'])) {
                 $query->where('created_at', '>=', "{$params['created_at']}");

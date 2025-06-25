@@ -15,6 +15,7 @@
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
         rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link href="{{ asset('admin/css/jquery.nestable.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('admin/js/tinymce/tinymce.min.js') }}"></script>
     <style>

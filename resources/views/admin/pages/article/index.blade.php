@@ -7,12 +7,10 @@
     $langPath = $params['langPath'];
     $statuses = GeneralStatus::toArray(true);
 
-    $title = $params['title'] ?? '';
-    $slug = $params['slug'] ?? '';
+    $keyword = $params['keyword'] ?? '';
     $status = $params['status'] ?? '';
+    $dateFilter = $params['datefilter'] ?? '';
     $description = $params['description'] ?? '';
-    $createdAt = $params['created_at'] ?? '';
-    $updatedAt = $params['updated_at'] ?? '';
 
 @endphp
 
@@ -31,26 +29,16 @@
             <form action="{{ route($routeBase . 'index') }}">
                 <div class="row mb-4">
                     <div class="col-lg-6">
-                        <x-input label="{{ __($langPath . 'fields.title') }}" type="text" value="{{ $title }}"
-                            name="title" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-input label="slug" type="text" value="{{ $slug }}" name="slug" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-input label="description" type="text" value="{{ $description }}" name="description" />
+                        <x-input label="{{ __('admin.filter.keyword') }}" type="text" value="{{ $keyword }}"
+                            name="keyword" />
                     </div>
                     <div class="col-lg-6">
                         <x-select label="{{ __($langPath . 'fields.status') }}" name="status" :options="$statuses"
                             value="{{ $status }}" />
                     </div>
                     <div class="col-lg-6">
-                        <x-input label="{{ __($langPath . 'table.startDate') }}" type="datetime-local"
-                            value="{{ $createdAt }}" name="created_at" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-input label="{{ __($langPath . 'table.endDate') }}" type="datetime-local"
-                            value="{{ $createdAt }}" name="updated_at" />
+                        <x-input label="{{ __('admin.filter.createAt') }}" type="text" value="{{ $dateFilter }}"
+                            name="datefilter" />
                     </div>
                     <div class="col-lg-12">
                         <input type="submit" class="btn btn-primary" value="{{ __($langPath . 'button.find') }}">
@@ -126,3 +114,27 @@
         {!! $items->appends(request()->input())->links('admin.partials.paginator') !!}
     </div>
 @endsection
+
+@push('script')
+    <script>
+        $(function() {
+
+            $('input[name="datefilter"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+
+            $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format(
+                    'MM/DD/YYYY'));
+            });
+
+            $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+
+        });
+    </script>
+@endpush

@@ -60,5 +60,10 @@ return [
     'action' => [
         'index' => 'Danh sách',
         'create' => 'Tạo mới'
-    ]
+    ],
+
+    'filter' => [
+        'keyword' => 'Từ khóa',
+        'createAt' => 'Thời gian tạo',
+    ],
 ];
