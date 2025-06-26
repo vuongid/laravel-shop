@@ -40,8 +40,7 @@ Route::group([
 
     // ================= ARTICLE =================
     Route::resource('article', ArticleController::class);
-    Route::get('article/change-status-{status}/{id}', [ArticleController::class, 'status'])
-        ->name('article.status');
+    Route::post('article/{id}/toggleStatus', [ArticleController::class, 'toggleStatus'])->name('article.toggleStatus');
 
     // ================= TAG =================
     Route::resource('tag', TagController::class);

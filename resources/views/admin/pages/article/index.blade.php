@@ -66,14 +66,7 @@
                             <tbody>
                                 @foreach ($items as $item)
                                     @php
-                                        $createdAt = date(
-                                            config('shop.format.short_time'),
-                                            strtotime($item->created_at),
-                                        );
-                                        $updateAt = date(
-                                            config('shop.format.short_time'),
-                                            strtotime($item->updated_at),
-                                        );
+                                        $checked = $item->status == GeneralStatus::ACTIVE ? 'checked' : '';
                                     @endphp
                                     <tr>
                                         <td width="10%">
@@ -86,9 +79,10 @@
                                             <p>{{ __($langPath . 'fields.slug') }} : {{ $item->slug }}</p>
                                         </td>
                                         <td>
-                                            <a href="{{ route($routeBase . 'status', ['status' => $item->status, 'id' => $item->id]) }}"
-                                                class="btn btn-round {{ $item->status->color() }}">{{ $item->status->label() }}
-                                            </a>
+                                            <label class="form-check form-switch">
+                                                <input class="form-check-input toggleStatus" type="checkbox"
+                                                    data-id={{ $item->id }} {{ $checked }} />
+                                            </label>
                                         </td>
                                         <td>
                                             <a href="{{ route($routeBase . 'show', $item) }}"
@@ -114,3 +108,22 @@
         {!! $items->appends(request()->input())->links('admin.partials.paginator') !!}
     </div>
 @endsection
+
+@push('script')
+    <script>
+        const cbsStatus = document.querySelectorAll('input.toggleStatus');
+
+        cbsStatus.forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                const id = this.dataset.id;
+                const status = this.checked ? 1 : 2;
+
+                axios.post(`/admin/article/${id}/toggleStatus`, {
+                    status: status,
+                }).then(function(res) {
+                    console.log(res.data);
+                })
+            })
+        });
+    </script>
+@endpush
