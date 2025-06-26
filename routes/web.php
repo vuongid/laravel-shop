@@ -34,12 +34,9 @@ Route::group([
 
     // ================= ARTICLE CATEGORY =================
     Route::resource('articleCategory', ArticleCategoryController::class);
-    Route::get('articleCategory/change-status-{status}/{id}', [ArticleCategoryController::class, 'status'])
-        ->name('articleCategory.status');
-    Route::get('articleCategory/move/{articleCategory}/{type}', [ArticleCategoryController::class, 'move'])
-        ->name('articleCategory.move');
-    Route::post('articleCategory/updateTree', [ArticleCategoryController::class, 'updateTree'])
-        ->name('articleCategory.updateTree');
+    Route::post('articleCategory/{id}/toggleStatus', [ArticleCategoryController::class, 'toggleStatus'])->name('articleCategory.toggleStatus');
+    Route::get('articleCategory/move/{articleCategory}/{type}', [ArticleCategoryController::class, 'move'])->name('articleCategory.move');
+    Route::post('articleCategory/updateTree', [ArticleCategoryController::class, 'updateTree'])->name('articleCategory.updateTree');
 
     // ================= ARTICLE =================
     Route::resource('article', ArticleController::class);

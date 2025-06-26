@@ -74,9 +74,7 @@ class ArticleCategory extends Model
     public function saveItem($params = null, $options = null)
     {
         if ($options['task'] == 'change-status') {
-
-            $status = ($params['currentStatus'] == GeneralStatus::ACTIVE->value) ? GeneralStatus::INACTIVE->value : GeneralStatus::ACTIVE->value;
-            self::where('id', $params['id'])->update(['status' => $status]);
+            self::where('id', $params['id'])->update(['status' => $params['status']]);
         }
         if ($options['task'] == 'create-item') {
             if (empty($params['slug'])) {

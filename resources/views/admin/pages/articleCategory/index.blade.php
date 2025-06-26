@@ -62,15 +62,19 @@
                             </thead>
                             <tbody>
                                 @foreach ($items as $item)
+                                    @php
+                                        $checked = $item->status == GeneralStatus::ACTIVE ? 'checked' : '';
+                                    @endphp
                                     <tr>
                                         <td class="text-secondary">
                                             {{ str_repeat('/-----', $item->depth) . $item->name }}
                                         </td>
                                         <td>@include('admin.pages.articleCategory.partials.index.order')</td>
                                         <td>
-                                            <a href="{{ route($routeBase . 'status', ['status' => $item->status, 'id' => $item->id]) }}"
-                                                class="btn btn-round {{ $item->status->color() }}">{{ $item->status->label() }}
-                                            </a>
+                                            <label class="form-check form-switch">
+                                                <input class="form-check-input toggleStatus" type="checkbox"
+                                                    data-id={{ $item->id }} {{ $checked }} />
+                                            </label>
                                         </td>
                                         <td>
                                             <a href="{{ route($routeBase . 'show', $item) }}"
@@ -125,6 +129,22 @@
                 })
             });
 
+        });
+
+
+        const cbsStatus = document.querySelectorAll('input.toggleStatus');
+
+        cbsStatus.forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                const id = this.dataset.id;
+                const status = this.checked ? 1 : 2;
+
+                axios.post(`/admin/articleCategory/${id}/toggleStatus`, {
+                    status: status,
+                }).then(function(res) {
+                    console.log(res.data);
+                })
+            })
         });
     </script>
 @endpush
