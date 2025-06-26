@@ -29,8 +29,8 @@ Route::group([
 ], function () {
     // ================= SLIDER =================
     Route::resource('slider', SliderController::class);
-    Route::get('slider/change-status-{status}/{id}', [SliderController::class, 'status'])
-        ->name('slider.status');
+    // Route::get('slider/change-status-{status}/{id}', [SliderController::class, 'status'])->name('slider.status');
+    Route::post('slider/{id}/toggleStatus', [SliderController::class, 'toggleStatus'])->name('slider.toggleStatus');
 
     // ================= ARTICLE CATEGORY =================
     Route::resource('articleCategory', ArticleCategoryController::class);

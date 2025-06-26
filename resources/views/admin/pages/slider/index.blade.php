@@ -67,6 +67,9 @@
                             </thead>
                             <tbody>
                                 @foreach ($items as $item)
+                                    @php
+                                        $checked = $item->status == GeneralStatus::ACTIVE ? 'checked' : '';
+                                    @endphp
                                     <tr>
                                         <td width="10%">
                                             <img src="{{ $item->getFirstMediaUrl('sliders') }}" alt="{{ $item->name }}">
@@ -76,9 +79,13 @@
                                             <p>{{ __('modules/slider.fields.url') }} : {{ $item->url }}</p>
                                         </td>
                                         <td>
-                                            <a href="{{ route($routeBase . 'status', ['status' => $item->status, 'id' => $item->id]) }}"
+                                            {{-- <a href="{{ route($routeBase . 'status', ['status' => $item->status, 'id' => $item->id]) }}"
                                                 class="btn btn-round {{ $item->status->color() }}">{{ $item->status->label() }}
-                                            </a>
+                                            </a> --}}
+                                            <label class="form-check form-switch">
+                                                <input class="form-check-input toggleStatus" type="checkbox"
+                                                    data-id={{ $item->id }} {{ $checked }} />
+                                            </label>
                                         </td>
                                         <td>
                                             <a href="{{ route($routeBase . 'show', $item) }}"
@@ -104,3 +111,22 @@
         {!! $items->appends(request()->input())->links('admin.partials.paginator') !!}
     </div>
 @endsection
+
+@push('script')
+    <script>
+        const cbsStatus = document.querySelectorAll('input.toggleStatus');
+
+        cbsStatus.forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                const id = this.dataset.id;
+                const status = this.checked ? 1 : 2;
+
+                axios.post(`/admin/slider/${id}/toggleStatus`, {
+                    status: status,
+                }).then(function(res) {
+                    console.log(res.data);
+                })
+            })
+        });
+    </script>
+@endpush

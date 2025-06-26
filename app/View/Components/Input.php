@@ -12,10 +12,12 @@ class Input extends Component
      * Create a new component instance.
      */
     public $label;
+    public $labelAttributes;
 
-    public function __construct($label = '')
+    public function __construct($label = '', $labelAttributes = [])
     {
         $this->label = $label;
+        $this->labelAttributes = $labelAttributes;
     }
 
     /**

@@ -110,12 +110,23 @@ class SliderController extends Controller
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Xóa dữ liệu thành công!');
     }
 
-    public function status($status, $id)
+    // public function status($status, $id)
+    // {
+    //     $this->params['currentStatus'] = $status;
+    //     $this->params['id'] = $id;
+    //     $this->model->saveItem($this->params, ['task' => 'change-status']);
+
+    //     return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
+    // }
+
+    public function toggleStatus(Request $request, $id)
     {
-        $this->params['currentStatus'] = $status;
         $this->params['id'] = $id;
         $this->model->saveItem($this->params, ['task' => 'change-status']);
 
-        return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Cập nhật dữ liệu thành công!');
+        return response()->json([
+            'status' => true,
+            'message' => 'Cập nhật dữ liệu thành công'
+        ]);
     }
 }

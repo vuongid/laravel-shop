@@ -74,9 +74,7 @@ class Slider extends Model implements HasMedia
     public function saveItem($params = null, $options = null)
     {
         if ($options['task'] == 'change-status') {
-
-            $status = ($params['currentStatus'] == GeneralStatus::ACTIVE->value) ? GeneralStatus::INACTIVE->value : GeneralStatus::ACTIVE->value;
-            self::where('id', $params['id'])->update(['status' => $status]);
+            self::where('id', $params['id'])->update(['status' => $params['status']]);
         }
         if ($options['task'] == 'create-item') {
             return $item = self::create($params);

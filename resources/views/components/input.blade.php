@@ -3,8 +3,11 @@
 @endphp
 
 <div class="mb-3">
-    @if ($label)
-        <label class="form-label @if ($attributes->has('required')) required @endif">{{ $label }}</label>
+    @if ($label || count($labelAttributes) > 0)
+        <label
+            {{ $attributes->only('id')->merge($labelAttributes)->class(['form-label', $attributes->has('required') ? 'required' : '']) }}>
+            {{ $label }}
+        </label>
     @endif
     <input {{ $attributes->merge(['class' => "form-control $isInvalid"]) }} />
     @error($attributes->get('name'))
