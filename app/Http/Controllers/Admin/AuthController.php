@@ -48,4 +48,11 @@ class AuthController extends Controller
         User::create($request->all());
         return redirect()->route($this->params['routeBase'] . 'register')->with('notify', 'Thêm dữ liệu thành công!');
     }
+
+    public function login()
+    {
+        return view($this->viewAction, [
+            'params' => $this->params,
+        ]);
+    }
 }
