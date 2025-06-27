@@ -1,3 +1,7 @@
+@php
+    $routeBase = $params['routeBase'];
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,11 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    {{-- <title>
+    <title>
         Admin -
         {{ __('admin.controller.' . $params['controller']) }} -
         {{ __('admin.action.' . $params['action']) }}
-    </title> --}}
+    </title>
     <link href="{{ asset('admin/css/tabler.min.css') }}" rel="stylesheet" />
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
@@ -26,9 +30,12 @@
 </head>
 
 <body>
+    @include('admin.partials.notify')
     <div class="page page-center">
         <div class="container container-tight py-4">
-            <form class="card card-md" action="./" method="get" autocomplete="off" novalidate="">
+            <form class="card card-md" action="{{ route($routeBase . 'postRegister') }}" method="POST"
+                autocomplete="off" novalidate="">
+                @csrf
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">Create new account</h2>
                     <x-input label="Email" type="text" name="email" />
@@ -54,7 +61,7 @@
                     <div class="mb-3">
                         <label class="form-label">Confirm Password</label>
                         <div class="input-group input-group-flat">
-                            <input type="password" class="form-control" autocomplete="off" name="confirmPassword">
+                            <input type="password" class="form-control" autocomplete="off" name="password_confirmation">
                             <span class="input-group-text">
                                 <a href="#" class="link-secondary" data-bs-toggle="tooltip"
                                     aria-label="Show password"

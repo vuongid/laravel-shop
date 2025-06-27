@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleCategoryRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateArticleCategoryRequest;
 use App\Models\ArticleCategory;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -26,7 +28,7 @@ class AuthController extends Controller
         $this->params['module'] = $module;
         $this->params['controller'] = $controller;
         $this->params['action'] = $action;
-        $this->params['routeBase'] = "$module.$controller.";
+        $this->params['routeBase'] = "$controller.";
         $this->viewAction =  "$module.pages.$controller.$action";
         $this->params['langPath'] = 'modules/articleCategory.';
     }
@@ -39,5 +41,11 @@ class AuthController extends Controller
         return view($this->viewAction, [
             'params' => $this->params,
         ]);
+    }
+
+    public function postRegister(StoreUserRequest $request)
+    {
+        User::create($request->all());
+        return redirect()->route($this->params['routeBase'] . 'register')->with('notify', 'Thêm dữ liệu thành công!');
     }
 }
