@@ -16,10 +16,7 @@
     <div class="page">
         @include('admin.layouts.sidebar')
         <div class="page-wrapper">
-            <!-- BEGIN PAGE HEADER -->
-
-            <!-- END PAGE HEADER -->
-            <!-- BEGIN PAGE BODY -->
+            @include('admin.layouts.header')
             <div class="page-body">
                 @yield('content')
             </div>

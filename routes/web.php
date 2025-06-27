@@ -51,7 +51,11 @@ Route::group([
     // ================= TAG =================
     Route::resource('articleTag', ArticleTagController::class);
 
+    // =================  =================
     Route::get('/slug/generate', [SlugController::class, 'generate'])->name('slug.generate');
+
+    // ================= Auth =================
+    Route::get('auth/profile', [AuthController::class, 'profile'])->name('auth.profile');
 });
 
 Route::get('auth/register', [AuthController::class, 'register'])->name('auth.register');

@@ -68,4 +68,11 @@ class AuthController extends Controller
 
         return back()->with('notify', 'Đăng nhập thất bại');
     }
+
+    public function profile()
+    {
+        return view('admin.pages.auth.profile', [
+            'params' => $this->params,
+        ]);
+    }
 }
