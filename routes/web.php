@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\ArticleTagController;
 use App\Http\Controllers\Admin\SlugController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -52,3 +53,5 @@ Route::group([
 
     Route::get('/slug/generate', [SlugController::class, 'generate'])->name('slug.generate');
 });
+
+Route::get('auth/register', [AuthController::class, 'register'])->name('auth.register');
