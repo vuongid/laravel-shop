@@ -57,3 +57,4 @@ Route::group([
 Route::get('auth/register', [AuthController::class, 'register'])->name('auth.register');
 Route::post('auth/register', [AuthController::class, 'postRegister'])->name('auth.postRegister');
 Route::get('auth/login', [AuthController::class, 'login'])->name('auth.login');
+Route::post('auth/login', [AuthController::class, 'postLogin'])->name('auth.postLogin');

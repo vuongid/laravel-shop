@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreArticleCategoryRequest;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateArticleCategoryRequest;
 use App\Models\ArticleCategory;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -54,5 +54,18 @@ class AuthController extends Controller
         return view($this->viewAction, [
             'params' => $this->params,
         ]);
+    }
+
+    public function postLogin(LoginRequest $request)
+    {
+        $credentials = $request->validated();
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->route('admin.slider.index');
+        }
+
+        return back()->with('notify', 'Đăng nhập thất bại');
     }
 }

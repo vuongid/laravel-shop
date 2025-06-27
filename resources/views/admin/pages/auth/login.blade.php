@@ -33,8 +33,8 @@
     @include('admin.partials.notify')
     <div class="page page-center">
         <div class="container container-tight py-4">
-            <form class="card card-md" action="{{ route($routeBase . 'postRegister') }}" method="POST"
-                autocomplete="off" novalidate="">
+            <form class="card card-md" action="{{ route($routeBase . 'postLogin') }}" method="POST" autocomplete="off"
+                novalidate="">
                 @csrf
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">Login</h2>
