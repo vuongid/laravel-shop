@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\StoreUserRequest;
@@ -10,6 +11,7 @@ use App\Models\ArticleCategory;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -96,5 +98,19 @@ class AuthController extends Controller
         return view('admin.pages.auth.changePassword', [
             'params' => $this->params,
         ]);
+    }
+
+    public function postChangePassword(ChangePasswordRequest $request)
+    {
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->with('notify', 'Mật khẩu hiện tại không đúng');
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return back()->with('notify', 'Đổi mật khẩu thành công');
     }
 }

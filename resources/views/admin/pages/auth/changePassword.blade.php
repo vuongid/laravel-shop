@@ -8,19 +8,20 @@
 @endphp
 @extends('admin.layouts.main')
 @section('content')
+    @include('admin.partials.notify')
     <x-page-header title="{{ __('modules/slider.actions.create') }}">
         <a href="" class="btn btn-primary">{{ __('modules/slider.button.back') }}</a>
     </x-page-header>
     <div class="container-xl">
         <div class="row row-cards">
             <div class="col-md-6">
-                <form method="POST" action="{{ route('admin.auth.postProfile') }}" class="card"
+                <form method="POST" action="{{ route('admin.auth.postChangePassword') }}" class="card"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
-                        <x-input label="Mật khẩu hiện tại" type="text" name="current_password" />
-                        <x-input label="Mật khẩu mới" type="text" name="password" />
-                        <x-input label="Xác nhận mật khẩu mới" type="text" name="password_confirmation" />
+                        <x-input label="Mật khẩu hiện tại" type="password" name="current_password" />
+                        <x-input label="Mật khẩu mới" type="password" name="password" />
+                        <x-input label="Xác nhận mật khẩu mới" type="password" name="password_confirmation" />
 
                     </div>
                     <div class="card-footer text-end">
