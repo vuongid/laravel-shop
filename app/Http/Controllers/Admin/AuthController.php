@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\ArticleCategory;
 use App\Models\User;
@@ -71,8 +72,22 @@ class AuthController extends Controller
 
     public function profile()
     {
+        $this->params['user'] = Auth::user();
+
         return view('admin.pages.auth.profile', [
             'params' => $this->params,
         ]);
+    }
+
+    public function postProfile(ProfileRequest $request)
+    {
+        $user = Auth::user();
+
+        $user->update($request->validated());
+        if ($request->hasFile('avatar')) {
+            $user->uploadImage($request->file('avatar')); // ← gọi hàm bạn tạo
+        }
+
+        return back()->with('notify', 'Cập nhật thành công');
     }
 }

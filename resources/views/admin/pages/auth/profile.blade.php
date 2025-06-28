@@ -4,7 +4,10 @@
     use App\Enums\GeneralStatus;
 
     $routeBase = $params['routeBase'];
-    $statuses = GeneralStatus::toArray();
+    $user = $params['user'];
+    $name = $user->name ?? '';
+    $phone = $user->phone ?? '';
+    $email = $user->email;
 
 @endphp
 @extends('admin.layouts.main')
@@ -15,12 +18,15 @@
     <div class="container-xl">
         <div class="row row-cards">
             <div class="col-md-6">
-                <form method="POST" action="" class="card" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.auth.postProfile') }}" class="card"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
-                        <x-input label="avatar" type="file" class="filepond-image" name="image" />
-                        <x-input label="tên" name="name" type="text" />
-                        <x-input label="phone" name="phone" type="text" />
+                        <x-input label="Email" type="text" value="{{ $email }}" disabled />
+                        <x-input label="avatar" type="file" class="filepond-image" name="avatar"
+                            data-image="{{ $user->getFirstMediaUrl('users') }}" />
+                        <x-input label="tên" name="name" type="text" value="{{ $name }}" />
+                        <x-input label="phone" name="phone" type="text" value="{{ $phone }}" />
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"
@@ -46,13 +52,16 @@
         FilePond.registerPlugin(FilePondPluginImagePreview);
         // Get a reference to the file input element
         const inputElement = document.querySelector('.filepond-image');
-
+        const imageCurrent = inputElement.dataset.image;
         // Create a FilePond instance
         const pond = FilePond.create(inputElement, {
             // Only accept images
             acceptedFileTypes: ['image/*'],
             allowReorder: true,
-            storeAsFile: true
+            storeAsFile: true,
+            files: [{
+                source: imageCurrent,
+            }]
         });
     </script>
 @endpush
