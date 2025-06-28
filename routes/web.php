@@ -23,43 +23,44 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], funct
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
-
 Route::group([
     'prefix' => 'admin',
-    'as' => 'admin.'
+    'as' => 'admin.',
 ], function () {
-    // ================= SLIDER =================
-    Route::resource('slider', SliderController::class);
-    // Route::get('slider/change-status-{status}/{id}', [SliderController::class, 'status'])->name('slider.status');
-    Route::post('slider/{id}/toggleStatus', [SliderController::class, 'toggleStatus'])->name('slider.toggleStatus');
+    Route::group(['middleware' => 'auth'], function () {
+        // ================= SLIDER =================
+        Route::resource('slider', SliderController::class);
+        Route::post('slider/{id}/toggleStatus', [SliderController::class, 'toggleStatus'])->name('slider.toggleStatus');
 
-    // ================= ARTICLE CATEGORY =================
-    Route::resource('articleCategory', ArticleCategoryController::class);
-    Route::post('articleCategory/{id}/toggleStatus', [ArticleCategoryController::class, 'toggleStatus'])->name('articleCategory.toggleStatus');
-    Route::get('articleCategory/move/{articleCategory}/{type}', [ArticleCategoryController::class, 'move'])->name('articleCategory.move');
-    Route::post('articleCategory/updateTree', [ArticleCategoryController::class, 'updateTree'])->name('articleCategory.updateTree');
+        // ================= ARTICLE CATEGORY =================
+        Route::resource('articleCategory', ArticleCategoryController::class);
+        Route::post('articleCategory/{id}/toggleStatus', [ArticleCategoryController::class, 'toggleStatus'])->name('articleCategory.toggleStatus');
+        Route::get('articleCategory/move/{articleCategory}/{type}', [ArticleCategoryController::class, 'move'])->name('articleCategory.move');
+        Route::post('articleCategory/updateTree', [ArticleCategoryController::class, 'updateTree'])->name('articleCategory.updateTree');
 
-    // ================= ARTICLE =================
-    Route::resource('article', ArticleController::class);
-    Route::post('article/{id}/toggleStatus', [ArticleController::class, 'toggleStatus'])->name('article.toggleStatus');
+        // ================= ARTICLE =================
+        Route::resource('article', ArticleController::class);
+        Route::post('article/{id}/toggleStatus', [ArticleController::class, 'toggleStatus'])->name('article.toggleStatus');
 
-    // ================= TAG =================
-    Route::resource('tag', TagController::class);
-    Route::get('tag/change-status-{status}/{id}', [TagController::class, 'status'])
-        ->name('tag.status');
+        // ================= TAG =================
+        Route::resource('tag', TagController::class);
+        Route::get('tag/change-status-{status}/{id}', [TagController::class, 'status'])->name('tag.status');
 
-    // ================= TAG =================
-    Route::resource('articleTag', ArticleTagController::class);
+        // ================= ARTICLE TAG =================
+        Route::resource('articleTag', ArticleTagController::class);
 
-    // =================  =================
-    Route::get('/slug/generate', [SlugController::class, 'generate'])->name('slug.generate');
+        // ================= SLUG =================
+        Route::get('/slug/generate', [SlugController::class, 'generate'])->name('slug.generate');
 
-    // ================= Auth =================
-    Route::get('auth/profile', [AuthController::class, 'profile'])->name('auth.profile');
-    Route::post('auth/profile', [AuthController::class, 'postProfile'])->name('auth.postProfile');
-    Route::get('auth/changePassword', [AuthController::class, 'changePassword'])->name('auth.changePassword');
-    Route::post('auth/postChangePassword', [AuthController::class, 'postChangePassword'])->name('auth.postChangePassword');
+        // ================= AUTH =================
+        Route::get('auth/profile', [AuthController::class, 'profile'])->name('auth.profile');
+        Route::post('auth/profile', [AuthController::class, 'postProfile'])->name('auth.postProfile');
+        Route::get('auth/changePassword', [AuthController::class, 'changePassword'])->name('auth.changePassword');
+        Route::post('auth/postChangePassword', [AuthController::class, 'postChangePassword'])->name('auth.postChangePassword');
+        Route::get('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    });
 });
+
 
 Route::get('auth/register', [AuthController::class, 'register'])->name('auth.register');
 Route::post('auth/register', [AuthController::class, 'postRegister'])->name('auth.postRegister');
