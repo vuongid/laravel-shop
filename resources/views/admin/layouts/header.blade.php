@@ -6,7 +6,7 @@
         <div class="nav-item dropdown">
             <a href="#" class="nav-link d-flex lh-1 p-0 px-2" data-bs-toggle="dropdown" aria-label="Open user menu"
                 aria-expanded="false">
-                <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)">
+                <span class="avatar avatar-sm" style="background-image: url({{ $user->getFirstMediaUrl('users') }})">
                 </span>
                 <div class="d-none d-xl-block ps-2">
                     <div>{{ $user->email }}</div>

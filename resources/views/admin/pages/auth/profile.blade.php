@@ -23,10 +23,10 @@
                     @csrf
                     <div class="card-body">
                         <x-input label="Email" type="text" value="{{ $email }}" disabled />
-                        <x-input label="avatar" type="file" class="filepond-image" name="avatar"
-                            data-image="{{ $user->getFirstMediaUrl('users') }}" />
                         <x-input label="tên" name="name" type="text" value="{{ $name }}" />
                         <x-input label="phone" name="phone" type="text" value="{{ $phone }}" />
+                        <x-input label="avatar" type="file" class="filepond-image" name="avatar"
+                            data-image="{{ $user->getFirstMediaUrl('users') }}" />
                     </div>
                     <div class="card-footer text-end">
                         <button type="submit"
