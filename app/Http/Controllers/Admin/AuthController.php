@@ -90,4 +90,11 @@ class AuthController extends Controller
 
         return back()->with('notify', 'Cập nhật thành công');
     }
+
+    public function changePassword()
+    {
+        return view('admin.pages.auth.changePassword', [
+            'params' => $this->params,
+        ]);
+    }
 }

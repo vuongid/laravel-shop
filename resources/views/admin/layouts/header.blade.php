@@ -11,7 +11,7 @@
              </a>
              <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                  <a href="{{ route('admin.auth.profile') }}" class="dropdown-item">Profile</a>
-                 <a href="./profile.html" class="dropdown-item">Change Password</a>
+                 <a href="{{ route('admin.auth.changePassword') }}" class="dropdown-item">Change Password</a>
                  <div class="dropdown-divider"></div>
                  <a href="./sign-in.html" class="dropdown-item">Logout</a>
              </div>

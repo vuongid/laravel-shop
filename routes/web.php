@@ -57,6 +57,7 @@ Route::group([
     // ================= Auth =================
     Route::get('auth/profile', [AuthController::class, 'profile'])->name('auth.profile');
     Route::post('auth/profile', [AuthController::class, 'postProfile'])->name('auth.postProfile');
+    Route::get('auth/changePassword', [AuthController::class, 'changePassword'])->name('auth.changePassword');
 });
 
 Route::get('auth/register', [AuthController::class, 'register'])->name('auth.register');
