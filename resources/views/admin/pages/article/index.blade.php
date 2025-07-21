@@ -81,7 +81,8 @@
                                         <td>
                                             <label class="form-check form-switch">
                                                 <input class="form-check-input toggleStatus" type="checkbox"
-                                                    data-id={{ $item->id }} {{ $checked }} />
+                                                    {{ $checked }}
+                                                    data-url="{{ route('admin.article.toggleStatus', $item) }}" />
                                             </label>
                                         </td>
                                         <td>
@@ -115,12 +116,9 @@
 
         cbsStatus.forEach(function(cb) {
             cb.addEventListener('change', function() {
-                const id = this.dataset.id;
-                const status = this.checked ? 1 : 2;
+                const url = this.dataset.url;
 
-                axios.post(`/admin/article/${id}/toggleStatus`, {
-                    status: status,
-                }).then(function(res) {
+                axios.put(url).then(function(res) {
                     console.log(res.data);
                 })
             })

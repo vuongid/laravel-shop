@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\GeneralStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
@@ -135,10 +136,12 @@ class ArticleController extends Controller
         return redirect()->route($this->params['routeBase'] . 'index')->with('notify', 'Xóa dữ liệu thành công!');
     }
 
-    public function toggleStatus(Request $request, $id)
+    public function toggleStatus(Request $request, Article $item)
     {
-        $this->params['id'] = $id;
-        $this->model->saveItem($this->params, ['task' => 'change-status']);
+        $item->status = $item->status == GeneralStatus::ACTIVE ? GeneralStatus::INACTIVE : GeneralStatus::ACTIVE;
+        $item->save();
+        // $this->params['id'] = $id;
+        // $this->model->saveItem($this->params, ['task' => 'change-status']);
 
         return response()->json([
             'status' => true,

@@ -40,7 +40,7 @@ Route::group([
 
         // ================= ARTICLE =================
         Route::resource('article', ArticleController::class);
-        Route::post('article/{id}/toggleStatus', [ArticleController::class, 'toggleStatus'])->name('article.toggleStatus');
+        Route::put('article/{item}/toggleStatus', [ArticleController::class, 'toggleStatus'])->name('article.toggleStatus');
 
         // ================= TAG =================
         Route::resource('tag', TagController::class);
@@ -59,6 +59,12 @@ Route::group([
         Route::post('auth/postChangePassword', [AuthController::class, 'postChangePassword'])->name('auth.postChangePassword');
         Route::get('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
     });
+
+
+    // Route::get('auth/register', [AuthController::class, 'register'])->name('auth.register');
+    // Route::post('auth/register', [AuthController::class, 'postRegister'])->name('auth.postRegister');
+    // Route::get('auth/login', [AuthController::class, 'login'])->name('auth.login');
+    // Route::post('auth/login', [AuthController::class, 'postLogin'])->name('auth.postLogin');
 });
 
 

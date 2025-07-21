@@ -74,7 +74,7 @@ class Article extends Model implements HasMedia
         }
 
         if ($options['task'] == 'list-items-article-category') {
-            return ArticleCategory::pluck('name', 'id')->toArray();
+            return ArticleCategory::withDepth()->defaultOrder()->get()->toFlatTree()->pluck('name_with_depth', 'id')->toArray();
         }
 
         if ($options['task'] == 'list-items-tag') {
@@ -166,5 +166,10 @@ class Article extends Model implements HasMedia
         } while ($exists);
 
         return $slug;
+    }
+
+    public function getNameWithDepthAttribute()
+    {
+        return str_repeat('/----- ', $this->depth) . $this->name;
     }
 }

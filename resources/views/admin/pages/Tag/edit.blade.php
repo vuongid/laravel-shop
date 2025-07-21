@@ -101,7 +101,7 @@
     </script>
 
 
-    <script>
+    {{-- <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);
         // Get a reference to the file input element
         const inputElement = document.querySelector('.filepond-image');
@@ -116,5 +116,5 @@
                 source: imageCurrent,
             }]
         });
-    </script>
+    </script> --}}
 @endpush

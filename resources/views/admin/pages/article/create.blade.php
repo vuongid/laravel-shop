@@ -77,7 +77,9 @@
         const titleInput = document.getElementById('title');
         const slugInput = document.getElementById('slug');
 
+        console.log(titleInput);
         titleInput.addEventListener('blur', function() {
+            console.log(1);
             const title = titleInput.value.trim();
 
             if (title === '') return;
